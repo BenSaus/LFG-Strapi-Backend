@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "invites",
+  "info": {
+    "name": "Invite"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "invitee": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "message": {
+      "type": "richtext"
+    },
+    "group": {
+      "via": "invites",
+      "model": "group"
+    }
+  }
+}

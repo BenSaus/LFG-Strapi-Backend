@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applications",
+  "info": {
+    "name": "Application"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "applicant": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "message": {
+      "type": "richtext"
+    },
+    "group": {
+      "via": "applications",
+      "model": "group"
+    }
+  }
+}

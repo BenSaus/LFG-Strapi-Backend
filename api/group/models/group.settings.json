@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "groups",
+  "info": {
+    "name": "Group"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "description": {
+      "type": "richtext"
+    },
+    "open_slots": {
+      "type": "integer"
+    },
+    "booking_status": {
+      "type": "enumeration",
+      "enum": [
+        "booked",
+        "notBooked"
+      ]
+    },
+    "applications": {
+      "collection": "application",
+      "via": "group"
+    },
+    "members": {
+      "via": "groups",
+      "plugin": "users-permissions",
+      "collection": "user",
+      "dominant": true
+    },
+    "invites": {
+      "collection": "invite",
+      "via": "group"
+    },
+    "max_age": {
+      "type": "integer"
+    },
+    "min_age": {
+      "type": "integer"
+    },
+    "bookdate": {
+      "type": "datetime"
+    },
+    "name": {
+      "type": "string",
+      "unique": false,
+      "required": false
+    },
+    "leader": {
+      "via": "leading_groups",
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
