@@ -12,8 +12,6 @@ module.exports = {
    * @return {Object}
    */
   async accept(ctx) {
-    let result = null;
-
     if (ctx.is("multipart")) {
     } else {
       const inviteId = ctx.request.body.id;
@@ -28,15 +26,29 @@ module.exports = {
         const currentMemberIds = group.members.map((member) => member.id);
         currentMemberIds.push(inviteeId);
 
-        result = await strapi.services.group.update(
+        const updatedInvite = await strapi.services.invite.update(
+          { id: inviteId },
+          {
+            status: "accepted",
+          }
+        );
+
+        const updatedGroup = await strapi.services.group.update(
           { id: groupId },
           {
             members: currentMemberIds,
           }
         );
+
+        return {
+          group: sanitizeEntity(updatedGroup, { model: strapi.models.group }),
+          invite: sanitizeEntity(updatedInvite, {
+            model: strapi.models.invite,
+          }),
+        };
       }
     }
 
-    return sanitizeEntity({ group: result }, { model: strapi.models.group });
+    return null;
   },
 };

@@ -2,6 +2,7 @@ module.exports = {
   definition: `
     type acceptInvitePayload {
         group: Group
+        invite: Invite
     }
   `,
   query: ``,
