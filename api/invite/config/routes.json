@@ -47,6 +47,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/invites/accept/:id",
+      "handler": "invite.accept",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
