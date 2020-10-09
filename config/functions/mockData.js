@@ -1,8 +1,6 @@
 createMockData = async (strapi) => {
   const businesses = await createBusinesses(strapi);
-  console.log(businesses);
-  const rooms = await createRooms(strapi, businesses);
-  console.log(rooms);
+  await createRooms(strapi, businesses);
 
   const users = await createUsers(strapi);
   const groups = await createGroups(strapi, users);
@@ -230,3 +228,31 @@ createBusinesses = async (strapi) => {
 module.exports = {
   createMockData,
 };
+
+// console.log(strapi.admin);
+
+// console.log(await strapi.admin.services.user.findOne({ id: 1 }));
+
+// if (strapi.admin.query("user").count() === 0) {
+// Wrong plugin I need users and permissions
+// const resp = await strapi.admin.services.user.create({
+//   username: "ImaUser",
+//   email: "goblin@gblah.com",
+//   firstname: "Bill",
+//   lastname: "Billy",
+//   provider: "local",
+//   password: "",
+//   role: 0,
+//   confirmed: true,
+//   isActive: true,
+//   blocked: false,
+//   groups: null,
+//   age: 16,
+//   image: null,
+//   about: "About this user",
+//   open_to_invite: true,
+//   hide_age: false,
+//   approved: true,
+// });
+// console.log(resp);
+// }

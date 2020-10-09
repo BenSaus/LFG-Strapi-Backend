@@ -29,6 +29,10 @@
     "business": {
       "model": "business",
       "via": "rooms"
+    },
+    "groups_preferred": {
+      "via": "preferred_rooms",
+      "collection": "group"
     }
   }
 }

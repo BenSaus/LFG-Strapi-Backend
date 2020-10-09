@@ -17,8 +17,17 @@
       "type": "richtext"
     },
     "group": {
-      "via": "invites",
-      "model": "group"
+      "model": "group",
+      "via": "invites"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "accepted",
+        "rejected",
+        "undecided"
+      ],
+      "default": "undecided"
     }
   }
 }

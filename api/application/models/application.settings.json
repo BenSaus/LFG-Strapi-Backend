@@ -17,8 +17,17 @@
       "type": "richtext"
     },
     "group": {
-      "via": "applications",
-      "model": "group"
+      "model": "group",
+      "via": "applications"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "accepted",
+        "rejected",
+        "undecided"
+      ],
+      "default": "undecided"
     }
   }
 }

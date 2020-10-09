@@ -23,18 +23,18 @@
       ]
     },
     "applications": {
-      "collection": "application",
-      "via": "group"
+      "via": "group",
+      "collection": "application"
     },
     "members": {
-      "via": "groups",
       "plugin": "users-permissions",
       "collection": "user",
+      "via": "groups",
       "dominant": true
     },
     "invites": {
-      "collection": "invite",
-      "via": "group"
+      "via": "group",
+      "collection": "invite"
     },
     "max_age": {
       "type": "integer"
@@ -51,9 +51,14 @@
       "required": false
     },
     "leader": {
-      "via": "leading_groups",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "leading_groups"
+    },
+    "preferred_rooms": {
+      "collection": "room",
+      "via": "groups_preferred",
+      "dominant": true
     }
   }
 }
