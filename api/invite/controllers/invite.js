@@ -17,9 +17,9 @@ module.exports = {
       const inviteId = ctx.request.body.id;
 
       const invite = await strapi.services.invite.findOne({ id: inviteId });
-      const inviteeId = invite.invitee.id;
 
       if (invite !== null) {
+        const inviteeId = invite.invitee.id;
         const groupId = invite.group.id;
         const group = await strapi.services.group.findOne({ id: groupId });
 

@@ -47,6 +47,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/applications/accept/:id",
+      "handler": "application.accept",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/applications/reject/:id",
+      "handler": "application.reject",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
