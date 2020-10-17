@@ -7,6 +7,49 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
   /**
+   * Create application override
+   *
+   * @return {Object}
+   */
+  async create(ctx) {
+    let entity;
+
+    const userId = ctx.request.body.applicant;
+    const groupId = ctx.request.body.group;
+
+    const group = await strapi.services.group.findOne({ id: groupId });
+
+    // Is this person a member of the group?
+    for (const member of group.members) {
+      console.log(member.id, userId);
+
+      if (member.id === Number(userId)) {
+        console.log("Already Member");
+        return null; // TODO: A descriptive error should be returned here...
+      }
+    }
+
+    // Is this application a duplicate?
+    const application = await strapi.services.application.findOne({
+      applicant: userId,
+      group: groupId,
+    });
+
+    if (application) {
+      console.log("Found dupe");
+      return null; // TODO: A descriptive error should be returned here...
+    }
+
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      entity = await strapi.services.application.create(data, { files });
+    } else {
+      entity = await strapi.services.application.create(ctx.request.body);
+    }
+    return sanitizeEntity(entity, { model: strapi.models.application });
+  },
+
+  /**
    * Accept the application
    *
    * @return {Object}
