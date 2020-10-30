@@ -25,7 +25,8 @@ module.exports = {
 
       if (member.id === Number(userId)) {
         console.log("Already Member");
-        return null; // TODO: A descriptive error should be returned here...
+        // return null; // TODO: A descriptive error should be returned here...
+        throw new Error("Already a member");
       }
     }
 
@@ -37,7 +38,7 @@ module.exports = {
 
     if (application) {
       console.log("Found dupe");
-      return null; // TODO: A descriptive error should be returned here...
+      throw new Error("Duplicate Application");
     }
 
     if (ctx.is("multipart")) {
