@@ -2,25 +2,7 @@
 const { sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
-  //   async me(ctx) {
-  //     console.log("ME Fired!!!");
-
-  //     const user = ctx.state.user;
-
-  //     if (!user) {
-  //       return ctx.badRequest(null, [
-  //         { messages: [{ id: "No authorization header was found" }] },
-  //       ]);
-  //     }
-
-  //     ctx.body = sanitizeEntity(user, {
-  //       model: strapi.query("user", "users-permissions").model,
-  //     });
-  //   },
-
   async meExtra(ctx) {
-    console.log("Extra Fired!!!");
-
     const user = ctx.state.user;
 
     if (!user) {
@@ -53,16 +35,3 @@ module.exports = {
 //     "policies": []
 //   }
 // },
-
-// {
-//     "routes": [
-//       {
-//         "method": "GET",
-//         "path": "/users/meExtra",
-//         "handler": "User.meExtra",
-//         "config": {
-//           "policies": []
-//         }
-//       }
-//     ]
-//   }
