@@ -63,9 +63,7 @@
     "image": {
       "model": "file",
       "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
+      "allowedTypes": ["images"],
       "plugin": "upload",
       "required": false
     },
@@ -95,6 +93,11 @@
       "collection": "achievement",
       "via": "users",
       "dominant": true
+    },
+    "confirmationToken": {
+      "type": "string",
+      "configurable": false,
+      "private": true
     }
   }
 }
