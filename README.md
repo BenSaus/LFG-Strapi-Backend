@@ -1,3 +1,3 @@
-# Strapi application
+# Looking For Group Backend
 
-A quick description of your strapi application
+Looking For Group (LFG) is a small social platform for people to connect and book Escape rooms.
