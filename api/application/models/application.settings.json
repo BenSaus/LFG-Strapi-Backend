@@ -17,8 +17,8 @@
       "type": "richtext"
     },
     "group": {
-      "model": "group",
-      "via": "applications"
+      "via": "applications",
+      "model": "group"
     },
     "status": {
       "type": "enumeration",

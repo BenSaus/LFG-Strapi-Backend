@@ -2,18 +2,21 @@
   "kind": "collectionType",
   "collectionName": "groups",
   "info": {
-    "name": "Group"
+    "name": "Group",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "description": {
       "type": "richtext"
     },
-    "open_slots": {
-      "type": "integer"
+    "member_max": {
+      "type": "integer",
+      "required": false
     },
     "booking_status": {
       "type": "enumeration",
@@ -23,8 +26,8 @@
       ]
     },
     "applications": {
-      "via": "group",
-      "collection": "application"
+      "collection": "application",
+      "via": "group"
     },
     "members": {
       "plugin": "users-permissions",
@@ -33,8 +36,8 @@
       "dominant": true
     },
     "invites": {
-      "via": "group",
-      "collection": "invite"
+      "collection": "invite",
+      "via": "group"
     },
     "max_age": {
       "type": "integer"
