@@ -36,8 +36,8 @@
       "dominant": true
     },
     "invites": {
-      "collection": "invite",
-      "via": "group"
+      "via": "group",
+      "collection": "invite"
     },
     "max_age": {
       "type": "integer"
@@ -62,6 +62,16 @@
       "collection": "room",
       "via": "groups_preferred",
       "dominant": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "open",
+        "closed",
+        "booking",
+        "booked"
+      ],
+      "default": "open"
     }
   }
 }

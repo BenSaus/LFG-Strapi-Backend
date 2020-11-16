@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "invites",
   "info": {
-    "name": "Invite"
+    "name": "Invite",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "invitee": {
@@ -17,8 +19,8 @@
       "type": "richtext"
     },
     "group": {
-      "via": "invites",
-      "model": "group"
+      "model": "group",
+      "via": "invites"
     },
     "status": {
       "type": "enumeration",
@@ -28,6 +30,10 @@
         "undecided"
       ],
       "default": "undecided"
+    },
+    "group_leader_dismissed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
