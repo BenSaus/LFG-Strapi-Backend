@@ -1,0 +1,9 @@
+query getRooms {
+    rooms {
+        id
+        name
+        business {
+            name
+        }
+    }
+}

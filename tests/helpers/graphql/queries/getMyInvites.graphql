@@ -1,0 +1,9 @@
+query getMyInvites($invitee: ID) {
+    invites(where: { invitee: { id: $invitee }, status: "undecided" }) {
+        id
+        message
+        group {
+            name
+        }
+    }
+}

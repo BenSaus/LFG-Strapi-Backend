@@ -1,0 +1,24 @@
+query getUser($id: ID!) {
+    user(id: $id) {
+        id
+        username
+        email
+        age
+        image {
+            url
+            previewUrl
+        }
+        about
+        open_to_invite
+        hide_age
+        achievements {
+            id
+            name
+            description
+            image {
+                previewUrl
+                url
+            }
+        }
+    }
+}

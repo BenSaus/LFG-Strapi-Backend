@@ -1,0 +1,9 @@
+# WARNING: TODO: Only group leader can do this
+mutation closeGroup($id: ID!) {
+    updateGroup(input: { where: { id: $id }, data: { status: closed } }) {
+        group {
+            id
+            status
+        }
+    }
+}

@@ -1,0 +1,41 @@
+query manageGetGroup($id: ID!) {
+    group(id: $id) {
+        id
+        name
+        member_max
+        booking_status
+        status
+        description
+        min_age
+        max_age
+        applications(where: { status: "undecided" }) {
+            id
+            message
+            status
+            applicant {
+                id
+                username
+                age
+                about
+            }
+        }
+        members {
+            id
+            username
+            age
+            about
+        }
+        invites(where: { group_leader_dismissed: false }) {
+            id
+            message
+            status
+            invitee {
+                username
+            }
+        }
+        preferred_rooms {
+            id
+            name
+        }
+    }
+}

@@ -1,0 +1,24 @@
+query getGroupChat($id: ID!) {
+    group(id: $id) {
+        id
+        name
+        booking_status
+        status
+        min_age
+        max_age
+        leader {
+            id
+            username
+        }
+        description
+        member_max
+        members {
+            id
+            username
+        }
+        preferred_rooms {
+            id
+            name
+        }
+    }
+}

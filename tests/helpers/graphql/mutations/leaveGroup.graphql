@@ -1,0 +1,12 @@
+# WARNING: TODO: Only group member can do this
+mutation leaveGroup($id: ID!, $members: [ID!]!) {
+    updateGroup(input: { where: { id: $id }, data: { members: $members } }) {
+        group {
+            id
+            members {
+                id
+                username
+            }
+        }
+    }
+}

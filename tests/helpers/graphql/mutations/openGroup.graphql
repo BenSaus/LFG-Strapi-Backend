@@ -1,0 +1,9 @@
+# WARNING: TODO: Only group leader can do this
+mutation openGroup($id: ID!) {
+    updateGroup(input: { where: { id: $id }, data: { status: open } }) {
+        group {
+            id
+            status
+        }
+    }
+}

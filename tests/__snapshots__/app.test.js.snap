@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create group 1`] = `
+Object {
+  "data": Object {
+    "createGroup": Object {
+      "group": Object {
+        "booking_status": "notBooked",
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "1",
+        "leader": Object {
+          "id": "1",
+        },
+        "max_age": 83,
+        "member_max": 3,
+        "members": Array [],
+        "min_age": 31,
+        "name": "Test Wombats",
+        "preferred_rooms": Array [],
+      },
+    },
+  },
+}
+`;
+
+exports[`Get Groups 1`] = `
+Object {
+  "data": Object {
+    "groups": Array [
+      Object {
+        "id": "1",
+        "name": "Test Wombats",
+      },
+    ],
+  },
+}
+`;

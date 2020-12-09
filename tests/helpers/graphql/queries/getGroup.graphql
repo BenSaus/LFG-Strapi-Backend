@@ -1,0 +1,23 @@
+query getGroup($id: ID!) {
+    group(id: $id) {
+        id
+        name
+        booking_status
+        min_age
+        max_age
+        leader {
+            id
+            username
+        }
+        description
+        member_max
+        # WARNING: This is a data leak
+        members {
+            id
+        }
+        preferred_rooms {
+            id
+            name
+        }
+    }
+}

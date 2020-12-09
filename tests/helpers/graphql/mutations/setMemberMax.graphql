@@ -1,0 +1,11 @@
+# WARNING: TODO: Only group leader can do this. Check server-side that members.length >= members_max
+mutation setMemberMax($id: ID!, $member_max: Int!) {
+    updateGroup(
+        input: { where: { id: $id }, data: { member_max: $member_max } }
+    ) {
+        group {
+            id
+            member_max
+        }
+    }
+}

@@ -1,57 +1,67 @@
 const permData = require("./permissions");
 
 const mockUserData = {
-  username: "testUser",
-  email: "testUser@strapi.com",
-  provider: "local",
-  password: "1234abc",
-  confirmed: true,
-  blocked: null,
-  hide_age: false,
-  approved: true,
-  role: null,
+    username: "testUser",
+    email: "testUser@strapi.com",
+    provider: "local",
+    password: "1234abc",
+    confirmed: true,
+    blocked: null,
+    hide_age: false,
+    approved: true,
+    role: null,
 };
 
 let instance;
 
 async function createTestUser() {
-  if (!instance) {
-    const defaultRole = await strapi
-      .query("role", "users-permissions")
-      .findOne({}, []);
+    if (!instance) {
+        const defaultRole = await strapi
+            .query("role", "users-permissions")
+            .findOne({}, []);
 
-    const role = defaultRole ? defaultRole.id : null;
+        const role = defaultRole ? defaultRole.id : null;
 
-    /** Creates a new user an push to database */
-    const user = await strapi.plugins["users-permissions"].services.user.add({
-      ...mockUserData,
-      username: "tester2",
-      email: "tester2@strapi.com",
-      role,
-    });
+        /** Creates a new user an push to database */
+        const user = await strapi.plugins[
+            "users-permissions"
+        ].services.user.add({
+            ...mockUserData,
+            username: "testUser",
+            email: "testUser@strapi.com",
+            role,
+        });
 
-    const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
-      id: user.id,
-    });
+        const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+            id: user.id,
+        });
 
-    instance = user;
-    instance.jwt = jwt;
-  }
+        instance = user;
+        instance.jwt = jwt;
+    }
 
-  return instance;
+    return instance;
 }
 
 async function setupPermissions() {
-  // allow all endpoints for public role
-  const publicRoleId = 2;
+    // allow all endpoints for public role
+    //   await strapi.plugins[
+    //     "users-permissions"
+    //   ].services.userspermissions.updateRole(
+    //     2, // PublicId
+    //     permData.publicPermissions
+    //   );
 
-  await strapi.plugins[
-    "users-permissions"
-  ].services.userspermissions.updateRole(publicRoleId, permData.data);
+    await strapi.plugins[
+        "users-permissions"
+    ].services.userspermissions.updateRole(
+        1, // AuthenticatedId
+        permData.authenticatedPermissions
+    );
 }
 
 function getTestUser() {
-  return instance;
+    return instance;
 }
 
 module.exports = { setupPermissions, createTestUser, getTestUser };

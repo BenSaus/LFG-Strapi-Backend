@@ -1,0 +1,37 @@
+# WARNING: TODO: Only group leader can do this
+mutation updateGroup(
+    $id: ID!
+    $name: String
+    $description: String
+    $member_max: Int
+    $min_age: Int
+    $max_age: Int
+    $preferred_rooms: [ID!]
+) {
+    updateGroup(
+        input: {
+            where: { id: $id }
+            data: {
+                name: $name
+                description: $description
+                member_max: $member_max
+                min_age: $min_age
+                max_age: $max_age
+                preferred_rooms: $preferred_rooms
+            }
+        }
+    ) {
+        group {
+            id
+            name
+            description
+            member_max
+            min_age
+            max_age
+            preferred_rooms {
+                id
+                name
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+query getApplicationsToThisGroup($applicant: ID!, $group: ID!) {
+    applications(where: { applicant: $applicant, group: $group }) {
+        status
+        applicant {
+            id
+            username
+        }
+        group {
+            id
+            name
+        }
+    }
+}

@@ -1,0 +1,13 @@
+# WARNING: TODO: Only non group member can do this
+mutation acceptInvite($id: ID!) {
+    acceptInvite(id: $id) {
+        invite {
+            id
+            status
+        }
+        group {
+            id
+            name
+        }
+    }
+}
