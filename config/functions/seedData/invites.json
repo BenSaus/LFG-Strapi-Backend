@@ -1,0 +1,26 @@
+[
+    {
+        "_group_name": "Misunderstood Mice",
+        "_invitee_name": "Ben",
+        "status": "undecided",
+        "message": "Join the Misunderstood Mice"
+    },
+    {
+        "_group_name": "Argile Sweaters",
+        "_invitee_name": "Greg",
+        "status": "rejected",
+        "message": "Join argile sweaters today!"
+    },
+    {
+        "_group_name": "Diabetic Dingos",
+        "_invitee_name": "Jordan",
+        "status": "accepted",
+        "message": "The Dingos are coming"
+    },
+    {
+        "_group_name": "Bad Wombats",
+        "_invitee_name": "Jordan",
+        "status": "rejected",
+        "message": "Bad wombats needs your help"
+    }
+]

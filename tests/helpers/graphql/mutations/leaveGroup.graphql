@@ -1,4 +1,5 @@
 # WARNING: TODO: Only group member can do this
+# Change to leaveGroup mutation
 mutation leaveGroup($id: ID!, $members: [ID!]!) {
     updateGroup(input: { where: { id: $id }, data: { members: $members } }) {
         group {

@@ -1,0 +1,56 @@
+[
+    {
+        "_group_name": "Misunderstood Mice",
+        "_applicant_name": "Ben",
+        "message": "Let me be a Mouse",
+        "status": "undecided"
+    },
+    {
+        "_group_name": "Misunderstood Mice",
+        "_applicant_name": "July",
+        "message": "Let me be a Mouse",
+        "status": "accepted"
+    },
+    {
+        "_group_name": "Flaming Giraffes",
+        "_applicant_name": "Jordan",
+        "message": "Let me be a Giraffe",
+        "status": "accepted"
+    },
+    {
+        "_group_name": "Flaming Giraffes",
+        "_applicant_name": "JohnBoy",
+        "message": "Let me be a Giraffe",
+        "status": "accepted"
+    },
+    {
+        "_group_name": "Flaming Giraffes",
+        "_applicant_name": "July",
+        "message": "Let me be a Giraffe",
+        "status": "accepted"
+    },
+    {
+        "_group_name": "Flaming Giraffes",
+        "_applicant_name": "Billy",
+        "message": "Let me be a Giraffe",
+        "status": "accepted"
+    },
+    {
+        "_group_name": "Flaming Giraffes",
+        "_applicant_name": "Greg",
+        "message": "Let me be a Giraffe - Greg",
+        "status": "undecided"
+    },
+    {
+        "_group_name": "Rabid Raccoons",
+        "_applicant_name": "Greg",
+        "message": "Let me be a Raccoon - Greg",
+        "status": "rejected"
+    },
+    {
+        "_group_name": "Rabid Raccoons",
+        "_applicant_name": "Sally",
+        "message": "This is Sally",
+        "status": "undecided"
+    }
+]

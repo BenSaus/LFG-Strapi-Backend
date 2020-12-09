@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Tilted Windmill",
+        "description": "Laborum voluptate amet consequat excepteur occaecat nostrud labore esse laborum deserunt dolore dolor cillum ad.",
+        "website_url": "https://tiltedwindmillescape.com",
+        "address": "688 Washington Road"
+    },
+    {
+        "name": "Some Other Place",
+        "description": "Consequat cillum adipisicing voluptate exercitation incididunt amet culpa pariatur sunt.",
+        "website_url": "https://someotherplace.com",
+        "address": "60990 Milwaukee Parkway"
+    },
+    {
+        "name": "Other Escape Room Place",
+        "description": "Nisi aliquip proident labore eiusmod nulla nulla qui ex aliquip aute.",
+        "website_url": "https://yetanotherplace.com",
+        "address": "6570 Arapahoe Circle"
+    }
+]

@@ -63,6 +63,34 @@ it("Get Groups", async (done) => {
     done();
 });
 
+// Requires users
+// Requires created group
+// Requires applications or invites accepted ??
+// Requires group with members
+
+// it("Remove Member", async (done) => {
+//     const query = `
+//     query {
+//         groups {
+//             id
+//             name
+//         }
+//     }
+//     `;
+
+//     const resp = await request(strapi.server)
+//         .post("/graphql")
+//         .send({ query }) // NOTE: The query must be in brackets to work
+//         .set("Authorization", "Bearer " + testUser.jwt)
+//         .set("Content-Type", "application/json")
+//         .expect(200);
+
+//     expect(resp.body).toMatchSnapshot();
+
+//     console.log(resp.body.data.groups);
+//     done();
+// });
+
 // REST Tests
 // it("Create group REST", async (done) => {
 //   const resp = await request(strapi.server) // app server is an instance of Class: http.Server

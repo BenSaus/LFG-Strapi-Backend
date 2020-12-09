@@ -1,4 +1,5 @@
 # WARNING: TODO: Only group leader can do this
+# Change to closeGroup mutation
 mutation closeGroup($id: ID!) {
     updateGroup(input: { where: { id: $id }, data: { status: closed } }) {
         group {

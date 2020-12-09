@@ -1,47 +1,48 @@
 # WARNING: TODO: Limit group number per person to 8
+# Booking status and status should not be valid input
 mutation createGroup(
-  $name: String!
-  $description: String!
-  $member_max: Int!
-  $max_age: Int!
-  $min_age: Int!
-  $leader: ID!
-  $members: [ID!]!
-  $preferred_rooms: [ID!]
+    $name: String!
+    $description: String!
+    $member_max: Int!
+    $max_age: Int!
+    $min_age: Int!
+    $leader: ID!
+    $members: [ID!]!
+    $preferred_rooms: [ID!]
 ) {
-  createGroup(
-    input: {
-      data: {
-        name: $name
-        description: $description
-        member_max: $member_max
-        max_age: $max_age
-        min_age: $min_age
-        leader: $leader
-        members: $members
-        preferred_rooms: $preferred_rooms
-        booking_status: notBooked
-      }
+    createGroup(
+        input: {
+            data: {
+                name: $name
+                description: $description
+                member_max: $member_max
+                max_age: $max_age
+                min_age: $min_age
+                leader: $leader
+                members: $members
+                preferred_rooms: $preferred_rooms
+                booking_status: notBooked
+            }
+        }
+    ) {
+        group {
+            id
+            name
+            description
+            member_max
+            max_age
+            min_age
+            leader {
+                id
+            }
+            members {
+                id
+            }
+            preferred_rooms {
+                id
+                name
+            }
+            booking_status
+        }
     }
-  ) {
-    group {
-      id
-      name
-      description
-      member_max
-      max_age
-      min_age
-      leader {
-        id
-      }
-      members {
-        id
-      }
-      preferred_rooms {
-        id
-        name
-      }
-      booking_status
-    }
-  }
 }

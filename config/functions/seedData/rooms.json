@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Magic Shop",
+        "description": "The mage is trapped",
+        "_businessName": "Tilted Windmill"
+    },
+    {
+        "name": "The Egyptians",
+        "description": "Ancient egypt awaits",
+        "_businessName": "Tilted Windmill"
+    },
+    {
+        "name": "Serial Killer",
+        "description": "It's Moyda",
+        "_businessName": "Tilted Windmill"
+    },
+    {
+        "name": "Gumshoe Noir",
+        "description": "She was a classy dane",
+        "_businessName": "Some Other Place"
+    },
+    {
+        "name": "Medieval",
+        "description": "",
+        "_businessName": "Some Other Place"
+    },
+    {
+        "name": "Jungle",
+        "description": "Vines and stuff",
+        "_businessName": "Other Escape Room Place"
+    },
+    {
+        "name": "Space",
+        "description": "To Infinity and ...",
+        "_businessName": "Other Escape Room Place"
+    }
+]

@@ -1,6 +1,6 @@
 "use strict";
 
-const mock = require("./mockData.js");
+const seed = require("./seedData.js");
 
 /**
  * An asynchronous bootstrap function that runs before
@@ -12,7 +12,8 @@ const mock = require("./mockData.js");
  * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
  */
 
-module.exports = () => {
-  //   console.log("Creating fake data...");
-  //   mock.createMockData(strapi);
+module.exports = async () => {
+    console.log("Creating fake data...");
+
+    seed.createSeedData(strapi);
 };

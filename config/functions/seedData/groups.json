@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Flaming Giraffes",
+        "member_max": 3,
+        "booking_status": "notBooked",
+        "max_age": 8,
+        "min_age": 50,
+        "description": "Ea Lorem culpa quis deserunt veniam laborum eiusmod.",
+        "status": "open",
+        "_leader_name": "Ben",
+        "_member_names": ["Jordan", "JohnBoy", "July", "Billy"]
+    },
+    {
+        "name": "Rabid Raccoons",
+        "member_max": 8,
+        "booking_status": "notBooked",
+        "max_age": 85,
+        "min_age": 46,
+        "description": "Irure magna magna enim laborum et nostrud.",
+        "status": "open",
+        "_leader_name": "Ben",
+        "_member_names": []
+    },
+    {
+        "name": "Diabetic Dingos",
+        "member_max": 7,
+        "booking_status": "notBooked",
+        "max_age": 90,
+        "min_age": 10,
+        "description": "Nisi reprehenderit commodo anim excepteur dolor pariatur ipsum voluptate esse aliqua.",
+        "status": "closed",
+        "_leader_name": "Ben",
+        "_member_names": ["Sally", "JohnBoy", "Jordan"]
+    },
+    {
+        "name": "Bad Wombats",
+        "member_max": 3,
+        "booking_status": "notBooked",
+        "max_age": 83,
+        "min_age": 31,
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "status": "closed",
+        "_leader_name": "Greg",
+        "_member_names": ["Ben", "Sally", "JohnBoy"]
+    },
+    {
+        "name": "Misunderstood Mice",
+        "member_max": 4,
+        "booking_status": "notBooked",
+        "max_age": 68,
+        "min_age": 18,
+        "description": "Pariatur veniam sint irure tempor ea laborum Lorem occaecat nostrud reprehenderit.",
+        "status": "open",
+        "_leader_name": "Sally",
+        "_member_names": ["July"]
+    },
+    {
+        "name": "Argile Sweaters",
+        "member_max": 8,
+        "booking_status": "notBooked",
+        "max_age": 74,
+        "min_age": 5,
+        "description": "Cillum excepteur sit quis qui elit cillum ut officia qui.",
+        "status": "open",
+        "_leader_name": "Jordan",
+        "_member_names": ["Sally", "July", "Billy", "Ben"]
+    },
+    {
+        "name": "Agitated Ardvarks",
+        "member_max": 5,
+        "booking_status": "notBooked",
+        "max_age": 20,
+        "min_age": 10,
+        "description": "Tempor incididunt et consectetur laboris enim fugiat aute elit cupidatat ut et id.",
+        "status": "closed",
+        "_leader_name": "Sally",
+        "_member_names": ["Jordan", "JohnBoy", "Greg", "July"]
+    }
+]

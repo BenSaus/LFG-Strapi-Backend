@@ -1,0 +1,6 @@
+[
+    { "name": "Time's Up", "description": "You ran out of time" },
+    { "name": "To Space!", "description": "You launched the shuttle!" },
+    { "name": "Mutant", "description": "You fell in a vat of acid" },
+    { "name": "Oops", "description": "You triggered the thinger" }
+]
