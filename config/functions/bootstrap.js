@@ -13,7 +13,5 @@ const seed = require("./seedData.js");
  */
 
 module.exports = async () => {
-    console.log("Creating fake data...");
-
     seed.createSeedData(strapi);
 };

@@ -7,6 +7,8 @@ const inviteSeed = require("./seedData/invites.json");
 const applicationSeed = require("./seedData/applications.json");
 
 async function createSeedData(strapi) {
+    console.log("Creating fake data...");
+
     const businesses = await createBusinesses(strapi);
     // console.log(businesses);
     const rooms = await createRooms(strapi, businesses);
@@ -22,7 +24,7 @@ async function createSeedData(strapi) {
     const invites = await createInvites(strapi, users, groups);
     // console.log(invites);
     const applications = await createApplications(strapi, users, groups);
-    console.log(applications);
+    // console.log(applications);
 }
 
 async function createBusinesses(strapi) {
@@ -120,6 +122,7 @@ function getAchievementIds(achievementNames, achievements) {
 async function createGroups(strapi, users) {
     let groups = [];
     if ((await strapi.query("group").count()) === 0) {
+        console.log("Creating groups...");
         for (let group of groupSeed) {
             const filledGroup = { ...group };
             filledGroup.leader = getUserId(group._leader_name, users);
