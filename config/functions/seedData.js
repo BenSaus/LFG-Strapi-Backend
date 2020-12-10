@@ -88,15 +88,17 @@ async function createUsers(strapi, achievements) {
     ) {
         console.log("Creating users...");
         for (let user of userSeed) {
-            user.achievements = getAchievementIds(
+            const filledUser = { ...user };
+            filledUser.achievements = getAchievementIds(
                 user._achievementNames,
                 achievements
             );
-            console.log("user.achievements", user.achievements);
+            filledUser.password = "123456";
+            console.log("filledUser.achievements", filledUser.achievements);
 
             const resp = await strapi.plugins[
                 "users-permissions"
-            ].services.user.add(user);
+            ].services.user.add(filledUser);
             users.push(resp);
         }
     } else {

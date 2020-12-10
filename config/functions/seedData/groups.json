@@ -1,10 +1,10 @@
 [
     {
         "name": "Flaming Giraffes",
-        "member_max": 3,
+        "member_max": 4,
         "booking_status": "notBooked",
-        "max_age": 8,
-        "min_age": 50,
+        "max_age": 50,
+        "min_age": 8,
         "description": "Ea Lorem culpa quis deserunt veniam laborum eiusmod.",
         "status": "open",
         "_leader_name": "Ben",
