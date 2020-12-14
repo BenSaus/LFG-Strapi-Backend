@@ -59,8 +59,8 @@
       "via": "leading_groups"
     },
     "preferred_rooms": {
-      "collection": "room",
       "via": "groups_preferred",
+      "collection": "room",
       "dominant": true
     },
     "status": {

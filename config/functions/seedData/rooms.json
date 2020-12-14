@@ -2,36 +2,43 @@
     {
         "name": "Magic Shop",
         "description": "The mage is trapped",
-        "_businessName": "Tilted Windmill"
+        "_businessName": "Tilted Windmill",
+        "player_max": 8
     },
     {
         "name": "The Egyptians",
         "description": "Ancient egypt awaits",
-        "_businessName": "Tilted Windmill"
+        "_businessName": "Tilted Windmill",
+        "player_max": 4
     },
     {
         "name": "Serial Killer",
         "description": "It's Moyda",
-        "_businessName": "Tilted Windmill"
+        "_businessName": "Tilted Windmill",
+        "player_max": 8
     },
     {
         "name": "Gumshoe Noir",
         "description": "She was a classy dane",
-        "_businessName": "Some Other Place"
+        "_businessName": "Some Other Place",
+        "player_max": 10
     },
     {
         "name": "Medieval",
         "description": "",
-        "_businessName": "Some Other Place"
+        "_businessName": "Some Other Place",
+        "player_max": 6
     },
     {
         "name": "Jungle",
         "description": "Vines and stuff",
-        "_businessName": "Other Escape Room Place"
+        "_businessName": "Other Escape Room Place",
+        "player_max": 4
     },
     {
         "name": "Space",
         "description": "To Infinity and ...",
-        "_businessName": "Other Escape Room Place"
+        "_businessName": "Other Escape Room Place",
+        "player_max": 8
     }
 ]

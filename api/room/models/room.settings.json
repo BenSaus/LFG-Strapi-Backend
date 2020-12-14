@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "rooms",
   "info": {
-    "name": "Room"
+    "name": "Room",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -31,8 +33,11 @@
       "via": "rooms"
     },
     "groups_preferred": {
-      "via": "preferred_rooms",
-      "collection": "group"
+      "collection": "group",
+      "via": "preferred_rooms"
+    },
+    "player_max": {
+      "type": "integer"
     }
   }
 }
