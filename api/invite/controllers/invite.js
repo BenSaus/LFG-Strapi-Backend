@@ -23,20 +23,30 @@ module.exports = {
      * @return {Object}
      */
     async accept(ctx) {
-        if (ctx.is("multipart")) {
-        } else {
-            const inviteId = ctx.request.body.id;
+        const inviteId = ctx.request.body.id;
+        const requestingUserId = ctx.state.user.id;
 
-            const invite = await strapi.services.invite.findOne({
-                id: inviteId,
-            });
+        const invite = await strapi.services.invite.findOne({
+            id: inviteId,
+        });
 
-            if (invite !== null) {
-                const inviteeId = invite.invitee.id;
-                const groupId = invite.group.id;
+        if (invite !== null) {
+            const inviteeId = invite.invitee.id;
+            const groupId = invite.group.id;
+
+            if (inviteeId === Number(requestingUserId)) {
                 const group = await strapi.services.group.findOne({
                     id: groupId,
                 });
+
+                // Requestor must not already be a member of the group
+                if (
+                    group.members.map((member) => member.id).includes(inviteeId)
+                ) {
+                    const err = new Error("Already a member");
+                    err.status = 400;
+                    throw err;
+                }
 
                 const currentMemberIds = group.members.map(
                     (member) => member.id
@@ -65,13 +75,50 @@ module.exports = {
                         model: strapi.models.invite,
                     }),
                 };
+            } else {
+                const err = new Error("Not authorized");
+                err.status = 403;
+                throw err;
             }
+        } else {
+            const err = new Error("Invite not found");
+            err.status = 404;
+            throw err;
         }
-
-        return null;
     },
 
-    async reject(ctx) {},
+    async reject(ctx) {
+        const inviteId = ctx.request.body.id;
+        const requestingUserId = ctx.state.user.id;
+
+        const invite = await strapi.services.invite.findOne({ id: inviteId });
+
+        if (invite !== null) {
+            const inviteeId = invite.invitee.id;
+
+            // Requestor must be the invitee of this invite
+            if (inviteeId === requestingUserId) {
+                const updatedInvite = await strapi.services.invite.update(
+                    { id: inviteId },
+                    {
+                        status: "rejected",
+                    }
+                );
+
+                return sanitizeEntity(updatedInvite, {
+                    model: strapi.models.invite,
+                });
+            } else {
+                const err = new Error("Not authorized");
+                err.status = 403;
+                throw err;
+            }
+        } else {
+            const err = new Error("Invite not found");
+            err.status = 404;
+            throw err;
+        }
+    },
 
     async dismiss(ctx) {
         const inviteId = ctx.request.body.id;

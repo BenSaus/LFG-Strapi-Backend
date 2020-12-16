@@ -13,7 +13,8 @@
   "attributes": {
     "invitee": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "invites"
     },
     "message": {
       "type": "richtext"
