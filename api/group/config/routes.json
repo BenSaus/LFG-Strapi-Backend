@@ -25,22 +25,6 @@
             }
         },
         {
-            "method": "DELETE",
-            "path": "/groups/:id/members/:userId",
-            "handler": "group.removeMember",
-            "config": {
-                "policies": []
-            }
-        },
-        {
-            "method": "DELETE",
-            "path": "/groups/:id/members",
-            "handler": "group.memberLeave",
-            "config": {
-                "policies": []
-            }
-        },
-        {
             "method": "POST",
             "path": "/groups",
             "handler": "group.create",

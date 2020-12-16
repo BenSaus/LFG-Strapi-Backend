@@ -6,49 +6,103 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
-  /**
-   * Accept the invitation
-   *
-   * @return {Object}
-   */
-  async accept(ctx) {
-    if (ctx.is("multipart")) {
-    } else {
-      const inviteId = ctx.request.body.id;
+    // async create(ctx) {
+    //     let entity;
+    //     if (ctx.is("multipart")) {
+    //         const { data, files } = parseMultipartData(ctx);
+    //         entity = await strapi.services.restaurant.create(data, { files });
+    //     } else {
+    //         entity = await strapi.services.restaurant.create(ctx.request.body);
+    //     }
+    //     return sanitizeEntity(entity, { model: strapi.models.restaurant });
+    // },
 
-      const invite = await strapi.services.invite.findOne({ id: inviteId });
+    /**
+     * Accept the invitation
+     *
+     * @return {Object}
+     */
+    async accept(ctx) {
+        if (ctx.is("multipart")) {
+        } else {
+            const inviteId = ctx.request.body.id;
 
-      if (invite !== null) {
-        const inviteeId = invite.invitee.id;
-        const groupId = invite.group.id;
-        const group = await strapi.services.group.findOne({ id: groupId });
+            const invite = await strapi.services.invite.findOne({
+                id: inviteId,
+            });
 
-        const currentMemberIds = group.members.map((member) => member.id);
-        currentMemberIds.push(inviteeId);
+            if (invite !== null) {
+                const inviteeId = invite.invitee.id;
+                const groupId = invite.group.id;
+                const group = await strapi.services.group.findOne({
+                    id: groupId,
+                });
 
-        const updatedInvite = await strapi.services.invite.update(
-          { id: inviteId },
-          {
-            status: "accepted",
-          }
-        );
+                const currentMemberIds = group.members.map(
+                    (member) => member.id
+                );
+                currentMemberIds.push(inviteeId);
 
-        const updatedGroup = await strapi.services.group.update(
-          { id: groupId },
-          {
-            members: currentMemberIds,
-          }
-        );
+                const updatedInvite = await strapi.services.invite.update(
+                    { id: inviteId },
+                    {
+                        status: "accepted",
+                    }
+                );
 
-        return {
-          group: sanitizeEntity(updatedGroup, { model: strapi.models.group }),
-          invite: sanitizeEntity(updatedInvite, {
-            model: strapi.models.invite,
-          }),
-        };
-      }
-    }
+                const updatedGroup = await strapi.services.group.update(
+                    { id: groupId },
+                    {
+                        members: currentMemberIds,
+                    }
+                );
 
-    return null;
-  },
+                return {
+                    group: sanitizeEntity(updatedGroup, {
+                        model: strapi.models.group,
+                    }),
+                    invite: sanitizeEntity(updatedInvite, {
+                        model: strapi.models.invite,
+                    }),
+                };
+            }
+        }
+
+        return null;
+    },
+
+    async reject(ctx) {},
+
+    async dismiss(ctx) {
+        const inviteId = ctx.request.body.id;
+        const requestingUserId = ctx.state.user.id;
+
+        const invite = await strapi.services.invite.findOne({ id: inviteId });
+
+        if (invite !== null) {
+            const groupLeaderId = invite.group.leader;
+
+            // Requestor must be group leader
+            if (groupLeaderId === requestingUserId) {
+                const updatedInvite = await strapi.services.invite.update(
+                    { id: inviteId },
+                    {
+                        group_leader_dismissed: true,
+                    }
+                );
+
+                return sanitizeEntity(updatedInvite, {
+                    model: strapi.models.invite,
+                });
+            } else {
+                const err = new Error("Not authorized");
+                err.status = 403;
+                throw err;
+            }
+        } else {
+            const err = new Error("Invite not found");
+            err.status = 404;
+            throw err;
+        }
+    },
 };
