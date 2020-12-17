@@ -6,16 +6,50 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
-    // async create(ctx) {
-    //     let entity;
-    //     if (ctx.is("multipart")) {
-    //         const { data, files } = parseMultipartData(ctx);
-    //         entity = await strapi.services.restaurant.create(data, { files });
-    //     } else {
-    //         entity = await strapi.services.restaurant.create(ctx.request.body);
-    //     }
-    //     return sanitizeEntity(entity, { model: strapi.models.restaurant });
-    // },
+    async create(ctx) {
+        console.log(ctx.request.body);
+
+        const inviteeId = ctx.request.body.invitee;
+        const groupId = ctx.request.body.group;
+        const message = ctx.request.body.message;
+        const requestingUserId = ctx.state.user.id;
+
+        console.log(inviteeId, groupId, message, requestingUserId);
+
+        // TOOD: VALIDATE HERE...
+        // TOOD: ensure invitee exists
+
+        const group = await strapi.services.group.findOne({
+            id: groupId,
+        });
+
+        if (group !== null) {
+            // Requestor must be group leader
+            if (requestingUserId === group.leader.id) {
+                const newInvite = await strapi.services.invite.create({
+                    invitee: inviteeId,
+                    group: groupId,
+                    message,
+                    group_leader_dismissed: false,
+                    status: "undecided",
+                });
+
+                console.log(newInvite);
+
+                return sanitizeEntity(newInvite, {
+                    model: strapi.models.invite,
+                });
+            } else {
+                const err = new Error("Not authorized");
+                err.status = 403;
+                throw err;
+            }
+        } else {
+            const err = new Error("Group not found");
+            err.status = 404;
+            throw err;
+        }
+    },
 
     /**
      * Accept the invitation
@@ -26,6 +60,8 @@ module.exports = {
         const inviteId = ctx.request.body.id;
         const requestingUserId = ctx.state.user.id;
 
+        // TODO: VALIDATE HERE...
+
         const invite = await strapi.services.invite.findOne({
             id: inviteId,
         });
@@ -34,7 +70,8 @@ module.exports = {
             const inviteeId = invite.invitee.id;
             const groupId = invite.group.id;
 
-            if (inviteeId === Number(requestingUserId)) {
+            // Requestor must be the invitee
+            if (Number(requestingUserId) === inviteeId) {
                 const group = await strapi.services.group.findOne({
                     id: groupId,
                 });
@@ -91,13 +128,15 @@ module.exports = {
         const inviteId = ctx.request.body.id;
         const requestingUserId = ctx.state.user.id;
 
+        // TODO: VALIDATE HERE...
+
         const invite = await strapi.services.invite.findOne({ id: inviteId });
 
         if (invite !== null) {
             const inviteeId = invite.invitee.id;
 
             // Requestor must be the invitee of this invite
-            if (inviteeId === requestingUserId) {
+            if (requestingUserId === inviteeId) {
                 const updatedInvite = await strapi.services.invite.update(
                     { id: inviteId },
                     {
@@ -124,13 +163,15 @@ module.exports = {
         const inviteId = ctx.request.body.id;
         const requestingUserId = ctx.state.user.id;
 
+        // TODO: VALIDATE HERE...
+
         const invite = await strapi.services.invite.findOne({ id: inviteId });
 
         if (invite !== null) {
             const groupLeaderId = invite.group.leader;
 
             // Requestor must be group leader
-            if (groupLeaderId === requestingUserId) {
+            if (requestingUserId === groupLeaderId) {
                 const updatedInvite = await strapi.services.invite.update(
                     { id: inviteId },
                     {
