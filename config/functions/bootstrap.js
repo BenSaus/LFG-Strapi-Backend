@@ -13,5 +13,5 @@ const seed = require("./seedData.js");
  */
 
 module.exports = async () => {
-    seed.createSeedData(strapi);
+    await seed.createSeedData(strapi);
 };
