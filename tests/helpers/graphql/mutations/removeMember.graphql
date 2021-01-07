@@ -1,11 +1,7 @@
-# WARNING: TODO: Only group leader can do this
-# The parameters here will need to change. Only pass in the member to be removed
-# Change to removeMember mutation
-
-mutation removeMember($id: ID!, $members: [ID!]!) {
-    updateGroup(input: { where: { id: $id }, data: { members: $members } }) {
+mutation removeMember($groupId: ID!, $memberId: ID!) {
+    removeMember(groupId: $groupId, memberId: $memberId) {
         group {
-            id
+            name
             members {
                 id
                 username

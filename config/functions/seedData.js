@@ -94,7 +94,6 @@ async function createUsers(strapi, achievements) {
                 achievements
             );
             filledUser.password = "123456";
-            console.log("filledUser.achievements", filledUser.achievements);
 
             const resp = await strapi.plugins[
                 "users-permissions"
@@ -172,9 +171,7 @@ async function createInvites(strapi, users, groups) {
 }
 
 function getGroupId(groupName, groups) {
-    console.log("getGroupId", groupName, groups.length);
     for (let group of groups) {
-        console.log(group.name);
         if (group.name === groupName) return group.id;
     }
     throw new Error("Name not found: " + groupName);

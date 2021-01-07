@@ -1,5 +1,4 @@
 # WARNING: TODO: Only group leader can do this
-# Change to openGroup mutation
 mutation openGroup($id: ID!) {
     updateGroup(input: { where: { id: $id }, data: { status: open } }) {
         group {

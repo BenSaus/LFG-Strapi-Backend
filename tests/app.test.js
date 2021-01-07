@@ -1,10 +1,12 @@
 const { setupStrapi } = require("./helpers/strapi");
-const { createTestUser, setupPermissions } = require("./helpers/strapi-user");
+const strapiUser = require("./helpers/strapiUser");
+const loadStrapiData = require("./helpers/strapiData");
 
 beforeAll(async (done) => {
     await setupStrapi();
-    await createTestUser();
-    await setupPermissions();
+    const testUser = await strapiUser.createTestUser();
+    await strapiUser.setAuthenticatedPermissions();
+    await loadStrapiData(strapi, testUser);
     done();
 });
 

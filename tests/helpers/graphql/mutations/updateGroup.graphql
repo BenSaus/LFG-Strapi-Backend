@@ -1,5 +1,4 @@
 # WARNING: TODO: Only group leader can do this
-# Limit inputs. Booking status and status should not be valid input
 mutation updateGroup(
     $id: ID!
     $name: String

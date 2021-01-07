@@ -1,11 +1,14 @@
-# WARNING: TODO: Only group leader can do this
-# Change to dismissInvite mutation
 mutation dismissInvite($id: ID!) {
-    updateInvite(
-        input: { where: { id: $id }, data: { group_leader_dismissed: true } }
-    ) {
+    dismissInvite(id: $id) {
         invite {
             id
+            group {
+                name
+            }
+            invitee {
+                id
+                username
+            }
             group_leader_dismissed
         }
     }

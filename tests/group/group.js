@@ -1,6 +1,9 @@
 const request = require("supertest");
-const { getTestUser } = require("../helpers/strapi-user");
 const graphql = require("../helpers/graphql");
+
+const pullData = require("../helpers/strapiData");
+const strapiUser = require("../helpers/strapiUser");
+const strapiActions = require("../helpers/strapiActions");
 
 const mockGroupData = {
     name: "Test Wombats",
@@ -14,9 +17,11 @@ const mockGroupData = {
 };
 
 let testUser = null;
+let strapiData = null;
 
 beforeAll(async (done) => {
-    testUser = getTestUser();
+    testUser = await strapiUser.getTestUser();
+    strapiData = await pullData();
     done();
 });
 
@@ -42,12 +47,12 @@ it("Create group", async (done) => {
 
 it("Get Groups", async (done) => {
     const query = `
-    query {
-        groups {
-            id
-            name
+        query {
+            groups {
+                id
+                name
+            }
         }
-    }
     `;
 
     const resp = await request(strapi.server)
@@ -59,67 +64,43 @@ it("Get Groups", async (done) => {
 
     expect(resp.body).toMatchSnapshot();
 
-    console.log(resp.body.data.groups);
     done();
 });
 
-// Requires users
-// Requires created group
-// Requires applications or invites accepted ??
-// Requires group with members
+it("Create Invite", async (done) => {
+    // Login
+    const requestingUser = await strapiUser.loginAs("Ben", "123456");
+    // Get data for invitee
+    const userToInvite = strapiData.users[0];
 
-// it("Remove Member", async (done) => {
-//     const query = `
-//     query {
-//         groups {
-//             id
-//             name
-//         }
-//     }
-//     `;
+    // Create group
+    const group = await strapiActions.createGroup(
+        strapi,
+        mockGroupData,
+        requestingUser
+    );
 
-//     const resp = await request(strapi.server)
-//         .post("/graphql")
-//         .send({ query }) // NOTE: The query must be in brackets to work
-//         .set("Authorization", "Bearer " + testUser.jwt)
-//         .set("Content-Type", "application/json")
-//         .expect(200);
+    console.log("group", group);
 
-//     expect(resp.body).toMatchSnapshot();
+    // Invite user to group
+    const resp = await request(strapi.server)
+        .post("/graphql")
+        .send({
+            query: graphql.mutations.createInvite,
+            variables: {
+                invitee: userToInvite.id,
+                group: group.id,
+                message: "Heya invite here",
+            },
+        }) // NOTE: The query must be in brackets to work
+        .set("Authorization", "Bearer " + requestingUser.jwt)
+        .set("Content-Type", "application/json")
+        .expect(200);
 
-//     console.log(resp.body.data.groups);
-//     done();
-// });
+    console.log(resp.body.data.createInvite);
 
-// REST Tests
-// it("Create group REST", async (done) => {
-//   const resp = await request(strapi.server) // app server is an instance of Class: http.Server
-//     .post("/groups")
-//     .send(mockGroupData)
-//     .set("Authorization", "Bearer " + testUser.jwt)
-//     .set("Content-Type", "application/json")
-//     .set("accept", "application/json")
-//     .expect("Content-Type", /json/)
-//     .expect(200);
+    expect(resp.body).toMatchSnapshot();
 
-//   console.log(resp.body);
-
-//   expect(resp.body.id).toBeDefined();
-
-//   done();
-// });
-
-// Get Groups REST
-// it("Get Groups REST", async (done) => {
-//     await request(strapi.server)
-//       .get("/groups")
-//       .set("accept", "application/json")
-//       .set("Content-Type", "application/json")
-//       .expect("Content-Type", /json/)
-//       .expect(200)
-//       .then((data) => {
-//         //   console.log(data.body);
-//       });
-
-//     done();
-//   });
+    // console.log(resp.body.data);
+    done();
+});

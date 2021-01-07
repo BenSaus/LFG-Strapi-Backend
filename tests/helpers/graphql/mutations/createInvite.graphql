@@ -1,0 +1,40 @@
+# WARNING: TODO: Only group leader can do this
+
+mutation createInvite($invitee: ID!, $group: ID!, $message: String!) {
+    createInvite(
+        input: { data: { invitee: $invitee, group: $group, message: $message } }
+    ) {
+        invite {
+            id
+            message
+            invitee {
+                id
+                username
+            }
+            group {
+                id
+                name
+            }
+        }
+    }
+}
+
+# This is the non strapi built in CRUD version. This version allows you to control inputs better
+# mutation inviteUser($inviteeId: ID!, $groupId: ID!, $message: String!) {
+#     inviteUser(
+#         input: { inviteeId: $inviteeId, groupId: $groupId, message: $message }
+#     ) {
+#         invite {
+#             id
+#             message
+#             invitee {
+#                 id
+#                 username
+#             }
+#             group {
+#                 id
+#                 name
+#             }
+#         }
+#     }
+# }

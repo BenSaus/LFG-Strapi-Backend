@@ -1,19 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Create Invite 1`] = `
+Object {
+  "data": Object {
+    "createInvite": Object {
+      "invite": Object {
+        "group": Object {
+          "id": "9",
+          "name": "Test Wombats",
+        },
+        "id": "5",
+        "invitee": Object {
+          "id": "1",
+          "username": "Jordan",
+        },
+        "message": "Heya invite here",
+      },
+    },
+  },
+}
+`;
+
 exports[`Create group 1`] = `
 Object {
   "data": Object {
     "createGroup": Object {
       "group": Object {
         "booking_status": "notBooked",
-        "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "1",
-        "leader": Object {
-          "id": "1",
-        },
+        "id": "8",
         "max_age": 83,
         "member_max": 3,
-        "members": Array [],
         "min_age": 31,
         "name": "Test Wombats",
         "preferred_rooms": Array [],
@@ -29,6 +45,34 @@ Object {
     "groups": Array [
       Object {
         "id": "1",
+        "name": "Flaming Giraffes",
+      },
+      Object {
+        "id": "2",
+        "name": "Rabid Raccoons",
+      },
+      Object {
+        "id": "3",
+        "name": "Diabetic Dingos",
+      },
+      Object {
+        "id": "4",
+        "name": "Bad Wombats",
+      },
+      Object {
+        "id": "5",
+        "name": "Misunderstood Mice",
+      },
+      Object {
+        "id": "6",
+        "name": "Argile Sweaters",
+      },
+      Object {
+        "id": "7",
+        "name": "Agitated Ardvarks",
+      },
+      Object {
+        "id": "8",
         "name": "Test Wombats",
       },
     ],

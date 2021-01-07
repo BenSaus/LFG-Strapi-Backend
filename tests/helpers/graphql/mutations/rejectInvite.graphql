@@ -1,0 +1,9 @@
+# WARNING: TODO: Only invitee can do this
+mutation rejectInvite($id: ID!) {
+    rejectInvite(id: $id) {
+        invite {
+            id
+            status
+        }
+    }
+}

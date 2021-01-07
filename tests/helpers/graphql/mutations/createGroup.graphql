@@ -1,5 +1,4 @@
 # WARNING: TODO: Limit group number per person to 8
-# Booking status and status should not be valid input
 mutation createGroup(
     $name: String!
     $description: String!
@@ -28,21 +27,14 @@ mutation createGroup(
         group {
             id
             name
-            description
             member_max
-            max_age
+            booking_status
             min_age
-            leader {
-                id
-            }
-            members {
-                id
-            }
+            max_age
             preferred_rooms {
                 id
                 name
             }
-            booking_status
         }
     }
 }
