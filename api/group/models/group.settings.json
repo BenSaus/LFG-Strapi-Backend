@@ -36,8 +36,8 @@
       "dominant": true
     },
     "invites": {
-      "via": "group",
-      "collection": "invite"
+      "collection": "invite",
+      "via": "group"
     },
     "max_age": {
       "type": "integer"
@@ -59,8 +59,8 @@
       "via": "leading_groups"
     },
     "preferred_rooms": {
-      "via": "groups_preferred",
       "collection": "room",
+      "via": "groups_preferred",
       "dominant": true
     },
     "status": {
@@ -72,6 +72,10 @@
         "booked"
       ],
       "default": "open"
+    },
+    "preferred_date_times": {
+      "collection": "preferred-date-time",
+      "via": "group"
     }
   }
 }

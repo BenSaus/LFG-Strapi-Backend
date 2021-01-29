@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/preferred-date-times",
+      "handler": "preferred-date-time.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/preferred-date-times/count",
+      "handler": "preferred-date-time.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/preferred-date-times/:id",
+      "handler": "preferred-date-time.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/preferred-date-times",
+      "handler": "preferred-date-time.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/preferred-date-times/:id",
+      "handler": "preferred-date-time.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/preferred-date-times/:id",
+      "handler": "preferred-date-time.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

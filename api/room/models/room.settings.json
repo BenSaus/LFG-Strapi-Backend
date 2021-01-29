@@ -33,8 +33,8 @@
       "via": "rooms"
     },
     "groups_preferred": {
-      "collection": "group",
-      "via": "preferred_rooms"
+      "via": "preferred_rooms",
+      "collection": "group"
     },
     "player_max": {
       "type": "integer"

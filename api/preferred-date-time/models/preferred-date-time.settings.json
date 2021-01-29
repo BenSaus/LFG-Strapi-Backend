@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "preferred_date_times",
+  "info": {
+    "name": "preferred Date Time",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "time": {
+      "type": "enumeration",
+      "enum": [
+        "afternoon",
+        "late_afternoon",
+        "evening",
+        "late_evening"
+      ]
+    },
+    "group": {
+      "via": "preferred_date_times",
+      "model": "group"
+    }
+  }
+}
