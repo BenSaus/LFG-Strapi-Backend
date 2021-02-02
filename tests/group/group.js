@@ -101,6 +101,5 @@ it("Create Invite", async (done) => {
 
     expect(resp.body).toMatchSnapshot();
 
-    // console.log(resp.body.data);
     done();
 });
