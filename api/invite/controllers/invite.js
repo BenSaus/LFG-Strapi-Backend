@@ -7,14 +7,10 @@ const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
 
 module.exports = {
     async create(ctx) {
-        console.log(ctx.request.body);
-
         const inviteeId = ctx.request.body.invitee;
         const groupId = ctx.request.body.group;
         const message = ctx.request.body.message;
         const requestingUserId = ctx.state.user.id;
-
-        console.log(inviteeId, groupId, message, requestingUserId);
 
         // TOOD: VALIDATE HERE...
         // TOOD: ensure invitee exists
@@ -33,8 +29,6 @@ module.exports = {
                     group_leader_dismissed: false,
                     status: "undecided",
                 });
-
-                console.log(newInvite);
 
                 return sanitizeEntity(newInvite, {
                     model: strapi.models.invite,

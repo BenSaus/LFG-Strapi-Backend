@@ -1,33 +1,38 @@
 {
-  "kind": "collectionType",
-  "collectionName": "achievements",
-  "info": {
-    "name": "Achievement"
-  },
-  "options": {
-    "increments": true,
-    "timestamps": true
-  },
-  "attributes": {
-    "description": {
-      "type": "richtext"
+    "kind": "collectionType",
+    "collectionName": "achievements",
+    "info": {
+        "name": "Achievement",
+        "description": ""
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false
+    "options": {
+        "increments": true,
+        "timestamps": true,
+        "draftAndPublish": false
     },
-    "name": {
-      "type": "string"
-    },
-    "users": {
-      "via": "achievements",
-      "plugin": "users-permissions",
-      "collection": "user"
+    "attributes": {
+        "description": {
+            "type": "richtext",
+            "required": false
+        },
+        "image": {
+            "model": "file",
+            "via": "related",
+            "allowedTypes": ["images"],
+            "plugin": "upload",
+            "required": false
+        },
+        "name": {
+            "type": "string",
+            "required": true,
+            "unique": true,
+            "minLength": 1,
+            "maxLength": 20
+        },
+        "users": {
+            "plugin": "users-permissions",
+            "collection": "user",
+            "via": "achievements"
+        }
     }
-  }
 }

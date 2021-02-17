@@ -28,8 +28,6 @@ module.exports = {
             if (group !== null) {
                 // Requestor cannot be a member of the group already
                 for (const member of group.members) {
-                    console.log(member.id, userId);
-
                     if (member.id === Number(applicantId)) {
                         const err = new Error("Already a member");
                         err.status = 403;

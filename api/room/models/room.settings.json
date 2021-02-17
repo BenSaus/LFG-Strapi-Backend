@@ -1,43 +1,47 @@
 {
-  "kind": "collectionType",
-  "collectionName": "rooms",
-  "info": {
-    "name": "Room",
-    "description": ""
-  },
-  "options": {
-    "increments": true,
-    "timestamps": true,
-    "draftAndPublish": false
-  },
-  "attributes": {
-    "name": {
-      "type": "string",
-      "unique": true,
-      "required": true
+    "kind": "collectionType",
+    "collectionName": "rooms",
+    "info": {
+        "name": "Room",
+        "description": ""
     },
-    "description": {
-      "type": "richtext"
+    "options": {
+        "increments": true,
+        "timestamps": true,
+        "draftAndPublish": false
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false
-    },
-    "business": {
-      "model": "business",
-      "via": "rooms"
-    },
-    "groups_preferred": {
-      "collection": "group",
-      "via": "preferred_rooms"
-    },
-    "player_max": {
-      "type": "integer"
+    "attributes": {
+        "name": {
+            "type": "string",
+            "unique": true,
+            "required": true,
+            "maxLength": 255,
+            "minLength": 1
+        },
+        "description": {
+            "type": "richtext",
+            "maxLength": 255
+        },
+        "image": {
+            "model": "file",
+            "via": "related",
+            "allowedTypes": ["images"],
+            "plugin": "upload",
+            "required": false
+        },
+        "business": {
+            "model": "business",
+            "via": "rooms"
+        },
+        "groups_preferred": {
+            "collection": "group",
+            "via": "preferred_rooms"
+        },
+        "player_max": {
+            "type": "integer",
+            "min": 1,
+            "max": 40,
+            "required": true
+        }
     }
-  }
 }

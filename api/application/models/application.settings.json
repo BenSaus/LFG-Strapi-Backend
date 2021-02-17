@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "applications",
   "info": {
-    "name": "Application"
+    "name": "Application",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "applicant": {
@@ -14,7 +16,9 @@
       "model": "user"
     },
     "message": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": false,
+      "maxLength": 255
     },
     "group": {
       "via": "applications",
@@ -27,7 +31,8 @@
         "rejected",
         "undecided"
       ],
-      "default": "undecided"
+      "default": "undecided",
+      "required": true
     }
   }
 }

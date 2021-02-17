@@ -92,8 +92,8 @@
       "collection": "group"
     },
     "achievements": {
-      "collection": "achievement",
       "via": "users",
+      "collection": "achievement",
       "dominant": true
     },
     "confirmationToken": {

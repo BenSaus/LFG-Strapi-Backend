@@ -17,7 +17,8 @@
       "via": "invites"
     },
     "message": {
-      "type": "richtext"
+      "type": "richtext",
+      "maxLength": 255
     },
     "group": {
       "model": "group",
@@ -30,11 +31,13 @@
         "rejected",
         "undecided"
       ],
-      "default": "undecided"
+      "default": "undecided",
+      "required": true
     },
     "group_leader_dismissed": {
       "type": "boolean",
-      "default": false
+      "default": false,
+      "required": false
     }
   }
 }
