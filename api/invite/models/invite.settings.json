@@ -21,8 +21,8 @@
       "maxLength": 255
     },
     "group": {
-      "model": "group",
-      "via": "invites"
+      "via": "invites",
+      "model": "group"
     },
     "status": {
       "type": "enumeration",

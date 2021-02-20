@@ -75,6 +75,10 @@
             "enum": ["open", "closed", "booking", "booked"],
             "default": "open",
             "required": true
+        },
+        "preferred_date_times": {
+            "via": "group",
+            "collection": "preferred-date-time"
         }
     }
 }
