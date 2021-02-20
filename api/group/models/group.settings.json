@@ -74,8 +74,8 @@
       "default": "open"
     },
     "preferred_date_times": {
-      "collection": "preferred-date-time",
-      "via": "group"
+      "via": "group",
+      "collection": "preferred-date-time"
     }
   }
 }

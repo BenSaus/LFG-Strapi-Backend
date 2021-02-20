@@ -12,7 +12,8 @@
   },
   "attributes": {
     "date": {
-      "type": "date"
+      "type": "datetime",
+      "required": true
     },
     "time": {
       "type": "enumeration",
@@ -21,11 +22,13 @@
         "late_afternoon",
         "evening",
         "late_evening"
-      ]
+      ],
+      "required": true,
+      "default": "afternoon"
     },
     "group": {
-      "via": "preferred_date_times",
-      "model": "group"
+      "model": "group",
+      "via": "preferred_date_times"
     }
   }
 }
