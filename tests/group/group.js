@@ -3,48 +3,35 @@ const graphql = require("../helpers/graphql");
 
 const pullData = require("../helpers/strapiData");
 const strapiUser = require("../helpers/strapiUser");
-const strapiActions = require("../helpers/strapiActions");
-
-const mockGroupData = {
-    name: "Test Wombats",
-    description: "Excepteur anim eiusmod ipsum ea enim.",
-    member_max: 3,
-    max_age: 83,
-    min_age: 31,
-    status: "open",
-    members: [],
-    preferred_rooms: [],
-};
+const lfgActions = require("../helpers/lfgActions");
+const mockData = require("./mockData");
 
 let testUser = null;
 let strapiData = null;
 
-beforeAll(async (done) => {
-    testUser = await strapiUser.getTestUser();
-    strapiData = await pullData();
-    done();
-});
-
-it("Create group", async (done) => {
-    const variables = { ...mockGroupData, leader: testUser.id };
-
-    const resp = await request(strapi.server)
+const call = (query, variables) => {
+    return request(strapi.server)
         .post("/graphql")
         .send({
-            query: graphql.mutations.createGroup, // Even though this is a mutation it MUST be under the 'query' key
-            variables: variables,
+            query,
+            variables,
         })
         .set("Authorization", "Bearer " + testUser.jwt)
         .set("Content-Type", "application/json")
         .set("accept", "application/json")
         .expect("Content-Type", /json/)
-        .expect(200);
+        .expect(200); // Expects 200 but there could be a GraphQL error
+};
 
-    expect(resp.body).toMatchSnapshot();
+beforeAll(async (done) => {
+    testUser = await strapiUser.getTestUser();
+    testUser2 = await strapiUser.getTestUser();
 
+    strapiData = await pullData();
     done();
 });
 
+// NOTICE: Order matters when using snapshots
 it("Get Groups", async (done) => {
     const query = `
         query {
@@ -55,51 +42,189 @@ it("Get Groups", async (done) => {
         }
     `;
 
-    const resp = await request(strapi.server)
-        .post("/graphql")
-        .send({ query }) // NOTE: The query must be in brackets to work
-        .set("Authorization", "Bearer " + testUser.jwt)
-        .set("Content-Type", "application/json")
-        .expect(200);
+    const resp = await call(query).expect(200);
+    expect(resp.body).toMatchSnapshot();
+
+    done();
+});
+
+it("Create group", async (done) => {
+    const variables = { ...mockData.createGroupData, leader: testUser.id };
+
+    const resp = await call(graphql.mutations.createGroup, variables);
 
     expect(resp.body).toMatchSnapshot();
 
     done();
 });
 
-it("Create Invite", async (done) => {
-    // Login
-    const requestingUser = await strapiUser.loginAs("Ben", "123456");
-    // Get data for invitee
-    const userToInvite = strapiData.users[0];
+// it("Create group, error non-unique name")
+// it("Create group, error member max invalid min")
+// it("Create group, error member max invalid max")
+// it("Create group, error age range invalid min")
+// it("Create group, error age range invalid max")
 
-    // Create group
-    const group = await strapiActions.createGroup(
+it("Update group description", async (done) => {
+    // create group through direct global strapi instance
+    const group = await lfgActions.createGroup(
         strapi,
-        mockGroupData,
-        requestingUser
+        mockData.updateDescriptionGroup,
+        testUser
     );
+    const variables = { id: group.id, description: "updated description" };
 
-    console.log("group", group);
-
-    // Invite user to group
-    const resp = await request(strapi.server)
-        .post("/graphql")
-        .send({
-            query: graphql.mutations.createInvite,
-            variables: {
-                invitee: userToInvite.id,
-                group: group.id,
-                message: "Heya invite here",
-            },
-        }) // NOTE: The query must be in brackets to work
-        .set("Authorization", "Bearer " + requestingUser.jwt)
-        .set("Content-Type", "application/json")
-        .expect(200);
-
-    console.log(resp.body.data.createInvite);
+    const resp = await call(graphql.mutations.updateGroup, variables);
 
     expect(resp.body).toMatchSnapshot();
-
     done();
 });
+
+it("Update group name", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.updateNameGroup,
+        testUser
+    );
+    const variables = { id: group.id, name: "This is my updated group name" };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group name, error non-unique name", async (done) => {
+    const groupA = await lfgActions.createGroup(
+        strapi,
+        mockData.updateNameAGroup,
+        testUser
+    );
+    const groupB = await lfgActions.createGroup(
+        strapi,
+        mockData.updateNameBGroup,
+        testUser
+    );
+    const variables = { id: groupB.id, name: groupA.name };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const errors = resp.body.errors;
+    expect(errors).toBeDefined();
+    expect(errors[0].message).toBe("ValidationError");
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group name, error empty name", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.generalGroupData,
+        testUser,
+        "Error Empty Name"
+    );
+    const variables = { id: group.id, name: "" };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const errors = resp.body.errors;
+    expect(errors).toBeDefined();
+    expect(errors[0].message).toBe("ValidationError");
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group name, error one space name", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.generalGroupData,
+        testUser,
+        "Error One Space Name"
+    );
+    const variables = { id: group.id, name: " " };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const errors = resp.body.errors;
+    expect(errors).toBeDefined();
+    expect(errors[0].message).toBe("ValidationError");
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group member max", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.generalGroupData,
+        testUser,
+        "Update member max"
+    );
+    const variables = { id: group.id, member_max: 8 };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const groupRespData = resp.body.data.updateGroup.group;
+    expect(groupRespData.member_max).toBe(8);
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group member max, error invalid member max", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.generalGroupData,
+        testUser,
+        "Error Invalid member max"
+    );
+    const variables = { id: group.id, member_max: 1 };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const errors = resp.body.errors;
+    expect(errors).toBeDefined();
+    expect(errors[0].message).toBe("ValidationError");
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+it("Update group member max, error invalid member max - max", async (done) => {
+    const group = await lfgActions.createGroup(
+        strapi,
+        mockData.generalGroupData,
+        testUser,
+        "Error Invalid member max 31"
+    );
+    const variables = { id: group.id, member_max: 31 };
+
+    const resp = await call(graphql.mutations.updateGroup, variables);
+
+    const errors = resp.body.errors;
+    expect(errors).toBeDefined();
+    expect(errors[0].message).toBe("ValidationError");
+
+    expect(resp.body).toMatchSnapshot();
+    done();
+});
+
+// it("Update group room preference") ?? just ids
+// it("Update group date time preference") ?? just ids
+// it("Update group age range")
+// it("Update group Validation")
+
+// ONLY LEADER can update their own groups
+it("Non-leader update, error not authorized", async (done) => {
+    expect(false).toBe(true);
+    done();
+});
+
+// it("Create group Validation")
+
+// it("Cannot Close group with one or more members")
+// it("Open group")
+// it("Delete group")
+// it("Remove member")
+// ONLY LEADER and only my groups

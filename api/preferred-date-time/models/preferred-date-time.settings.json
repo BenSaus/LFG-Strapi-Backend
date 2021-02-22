@@ -27,8 +27,8 @@
       "default": "afternoon"
     },
     "group": {
-      "model": "group",
-      "via": "preferred_date_times"
+      "via": "preferred_date_times",
+      "model": "group"
     }
   }
 }

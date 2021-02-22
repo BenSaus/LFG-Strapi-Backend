@@ -1,5 +1,6 @@
 const request = require("supertest");
 
+// Singleton
 let instance;
 
 async function strapiData(strapi, requestUser) {

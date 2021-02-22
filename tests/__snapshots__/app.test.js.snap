@@ -1,26 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Create Invite 1`] = `
-Object {
-  "data": Object {
-    "createInvite": Object {
-      "invite": Object {
-        "group": Object {
-          "id": "9",
-          "name": "Test Wombats",
-        },
-        "id": "5",
-        "invitee": Object {
-          "id": "1",
-          "username": "Jordan",
-        },
-        "message": "Heya invite here",
-      },
-    },
-  },
-}
-`;
-
 exports[`Create group 1`] = `
 Object {
   "data": Object {
@@ -31,7 +10,7 @@ Object {
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
-        "name": "Test Wombats",
+        "name": "Create Group",
         "preferred_rooms": Array [],
       },
     },
@@ -71,11 +50,244 @@ Object {
         "id": "7",
         "name": "Agitated Ardvarks",
       },
-      Object {
-        "id": "8",
-        "name": "Test Wombats",
-      },
     ],
   },
+}
+`;
+
+exports[`Update group description 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "updated description",
+        "id": "9",
+        "max_age": 83,
+        "member_max": 3,
+        "min_age": 31,
+        "name": "Update Description Group",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+      },
+    },
+  },
+}
+`;
+
+exports[`Update group member max 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "15",
+        "max_age": 83,
+        "member_max": 8,
+        "min_age": 31,
+        "name": "Update member max",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+      },
+    },
+  },
+}
+`;
+
+exports[`Update group member max, error invalid member max - max 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "data": Object {
+            "errors": Object {
+              "member_max": Array [
+                "member_max must be less than or equal to 30",
+              ],
+            },
+          },
+          "isBoom": true,
+          "isServer": false,
+          "output": Object {
+            "headers": Object {},
+            "payload": Object {
+              "error": "Bad Request",
+              "message": "ValidationError",
+              "statusCode": 400,
+            },
+            "statusCode": 400,
+          },
+        },
+      },
+      "locations": Array [
+        Object {
+          "column": 5,
+          "line": 12,
+        },
+      ],
+      "message": "ValidationError",
+      "path": Array [
+        "updateGroup",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Update group member max, error invalid member max 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "data": Object {
+            "errors": Object {
+              "member_max": Array [
+                "member_max must be greater than or equal to 2",
+              ],
+            },
+          },
+          "isBoom": true,
+          "isServer": false,
+          "output": Object {
+            "headers": Object {},
+            "payload": Object {
+              "error": "Bad Request",
+              "message": "ValidationError",
+              "statusCode": 400,
+            },
+            "statusCode": 400,
+          },
+        },
+      },
+      "locations": Array [
+        Object {
+          "column": 5,
+          "line": 12,
+        },
+      ],
+      "message": "ValidationError",
+      "path": Array [
+        "updateGroup",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Update group name 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "10",
+        "max_age": 83,
+        "member_max": 3,
+        "min_age": 31,
+        "name": "This is my updated group name",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+      },
+    },
+  },
+}
+`;
+
+exports[`Update group name, error empty name 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "data": Object {
+            "errors": Object {
+              "name": Array [
+                "name must be at least 3 characters",
+              ],
+            },
+          },
+          "isBoom": true,
+          "isServer": false,
+          "output": Object {
+            "headers": Object {},
+            "payload": Object {
+              "error": "Bad Request",
+              "message": "ValidationError",
+              "statusCode": 400,
+            },
+            "statusCode": 400,
+          },
+        },
+      },
+      "locations": Array [
+        Object {
+          "column": 5,
+          "line": 12,
+        },
+      ],
+      "message": "ValidationError",
+      "path": Array [
+        "updateGroup",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Update group name, error one space name 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": Object {
+          "data": Object {
+            "errors": Object {
+              "name": Array [
+                "name must be at least 3 characters",
+              ],
+            },
+          },
+          "isBoom": true,
+          "isServer": false,
+          "output": Object {
+            "headers": Object {},
+            "payload": Object {
+              "error": "Bad Request",
+              "message": "ValidationError",
+              "statusCode": 400,
+            },
+            "statusCode": 400,
+          },
+        },
+      },
+      "locations": Array [
+        Object {
+          "column": 5,
+          "line": 12,
+        },
+      ],
+      "message": "ValidationError",
+      "path": Array [
+        "updateGroup",
+      ],
+    },
+  ],
 }
 `;

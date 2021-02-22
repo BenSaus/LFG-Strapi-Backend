@@ -1,0 +1,14 @@
+# Only group leader can do this
+mutation createPreferredDateTime(
+    $groupId: ID!
+    $date: DateTime!
+    $time: ENUM_PREFERREDDATETIME_TIME!
+) {
+    createPreferredDateTime(
+        input: { data: { group: $groupId, date: $date, time: $time } }
+    ) {
+        preferredDateTime {
+            id
+        }
+    }
+}

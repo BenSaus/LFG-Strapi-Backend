@@ -1,47 +1,49 @@
 {
-    "kind": "collectionType",
-    "collectionName": "rooms",
-    "info": {
-        "name": "Room",
-        "description": ""
+  "kind": "collectionType",
+  "collectionName": "rooms",
+  "info": {
+    "name": "Room",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "maxLength": 255,
+      "minLength": 1
     },
-    "options": {
-        "increments": true,
-        "timestamps": true,
-        "draftAndPublish": false
+    "description": {
+      "type": "richtext",
+      "maxLength": 255
     },
-    "attributes": {
-        "name": {
-            "type": "string",
-            "unique": true,
-            "required": true,
-            "maxLength": 255,
-            "minLength": 1
-        },
-        "description": {
-            "type": "richtext",
-            "maxLength": 255
-        },
-        "image": {
-            "model": "file",
-            "via": "related",
-            "allowedTypes": ["images"],
-            "plugin": "upload",
-            "required": false
-        },
-        "business": {
-            "model": "business",
-            "via": "rooms"
-        },
-        "groups_preferred": {
-            "collection": "group",
-            "via": "preferred_rooms"
-        },
-        "player_max": {
-            "type": "integer",
-            "min": 1,
-            "max": 40,
-            "required": true
-        }
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "business": {
+      "model": "business",
+      "via": "rooms"
+    },
+    "groups_preferred": {
+      "via": "preferred_rooms",
+      "collection": "group"
+    },
+    "player_max": {
+      "type": "integer",
+      "min": 1,
+      "max": 40,
+      "required": true
     }
+  }
 }

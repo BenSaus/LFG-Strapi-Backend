@@ -47,6 +47,7 @@
             ".tmp",
             ".cache"
         ],
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "verbose": true
     }
 }

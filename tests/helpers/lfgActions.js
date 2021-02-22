@@ -2,9 +2,14 @@ const request = require("supertest");
 const graphql = require("./graphql");
 
 // WARNING: TODO: Passing leader information here is temporary until the create group endpoint is updated
-async function createGroup(strapi, groupData, leaderUser) {
-    console.log(leaderUser);
-    const variables = { ...groupData, leader: leaderUser.user.id };
+// Note: Group names must be unique so I added the optional name parameter
+async function createGroup(strapi, groupData, leaderUser, name=null) {
+    const modGroupData = {...groupData}
+    if(name !== null) [
+        modGroupData.name = name
+    ]
+
+    const variables = { ...modGroupData, leader: leaderUser.id };
 
     const resp = await request(strapi.server)
         .post("/graphql")

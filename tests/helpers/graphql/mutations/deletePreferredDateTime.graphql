@@ -1,0 +1,7 @@
+mutation deletePreferredDateTime($id: ID!) {
+    deletePreferredDateTime(input: { where: { id: $id } }) {
+        preferredDateTime {
+            id
+        }
+    }
+}

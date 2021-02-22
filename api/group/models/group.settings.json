@@ -1,84 +1,94 @@
 {
-    "kind": "collectionType",
-    "collectionName": "groups",
-    "info": {
-        "name": "Group",
-        "description": ""
+  "kind": "collectionType",
+  "collectionName": "groups",
+  "info": {
+    "name": "Group",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "description": {
+      "type": "richtext",
+      "maxLength": 255
     },
-    "options": {
-        "increments": true,
-        "timestamps": true,
-        "draftAndPublish": false
+    "member_max": {
+      "type": "integer",
+      "required": true,
+      "min": 2,
+      "max": 30
     },
-    "attributes": {
-        "description": {
-            "type": "richtext",
-            "maxLength": 255
-        },
-        "member_max": {
-            "type": "integer",
-            "required": true
-        },
-        "booking_status": {
-            "type": "enumeration",
-            "enum": ["booked", "notBooked"],
-            "required": true
-        },
-        "applications": {
-            "collection": "application",
-            "via": "group"
-        },
-        "members": {
-            "plugin": "users-permissions",
-            "collection": "user",
-            "via": "groups",
-            "dominant": true
-        },
-        "invites": {
-            "via": "group",
-            "collection": "invite"
-        },
-        "max_age": {
-            "type": "integer",
-            "max": 99,
-            "min": 1,
-            "required": true
-        },
-        "min_age": {
-            "type": "integer",
-            "required": true,
-            "max": 99,
-            "min": 1
-        },
-        "bookdate": {
-            "type": "datetime"
-        },
-        "name": {
-            "type": "string",
-            "unique": true,
-            "required": true,
-            "maxLength": 30,
-            "minLength": 3
-        },
-        "leader": {
-            "plugin": "users-permissions",
-            "model": "user",
-            "via": "leading_groups"
-        },
-        "preferred_rooms": {
-            "via": "groups_preferred",
-            "collection": "room",
-            "dominant": true
-        },
-        "status": {
-            "type": "enumeration",
-            "enum": ["open", "closed", "booking", "booked"],
-            "default": "open",
-            "required": true
-        },
-        "preferred_date_times": {
-            "via": "group",
-            "collection": "preferred-date-time"
-        }
+    "booking_status": {
+      "type": "enumeration",
+      "enum": [
+        "booked",
+        "notBooked"
+      ],
+      "required": true
+    },
+    "applications": {
+      "collection": "application",
+      "via": "group"
+    },
+    "members": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "groups",
+      "dominant": true
+    },
+    "invites": {
+      "collection": "invite",
+      "via": "group"
+    },
+    "max_age": {
+      "type": "integer",
+      "max": 99,
+      "min": 1,
+      "required": true
+    },
+    "min_age": {
+      "type": "integer",
+      "required": true,
+      "max": 99,
+      "min": 1
+    },
+    "bookdate": {
+      "type": "datetime"
+    },
+    "name": {
+      "type": "string",
+      "unique": true,
+      "required": true,
+      "maxLength": 30,
+      "minLength": 3
+    },
+    "leader": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "leading_groups"
+    },
+    "preferred_rooms": {
+      "collection": "room",
+      "via": "groups_preferred",
+      "dominant": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "open",
+        "closed",
+        "booking",
+        "booked"
+      ],
+      "default": "open",
+      "required": true
+    },
+    "preferred_date_times": {
+      "collection": "preferred-date-time",
+      "via": "group"
     }
+  }
 }

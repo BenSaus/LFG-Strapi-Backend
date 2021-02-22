@@ -14,6 +14,7 @@ const mockUserData = {
     role: null,
 };
 
+// Singleton
 let instance;
 
 async function createTestUser() {
@@ -24,7 +25,7 @@ async function createTestUser() {
 
         const role = defaultRole ? defaultRole.id : null;
 
-        /** Creates a new user an push to database */
+        /** Creates a new user and push to database */
         const user = await strapi.plugins[
             "users-permissions"
         ].services.user.add({
