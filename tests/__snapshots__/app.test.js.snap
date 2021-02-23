@@ -65,9 +65,30 @@ Object {
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
-        "name": "Update Description Group",
+        "name": "Update group description",
         "preferred_date_times": Array [],
         "preferred_rooms": Array [],
+        "status": "open",
+      },
+    },
+  },
+}
+`;
+
+exports[`Update group max age 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "17",
+        "max_age": 99,
+        "member_max": 3,
+        "min_age": 31,
+        "name": "Update group max age",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+        "status": "open",
       },
     },
   },
@@ -80,13 +101,14 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "15",
+        "id": "13",
         "max_age": 83,
         "member_max": 8,
         "min_age": 31,
-        "name": "Update member max",
+        "name": "Update group member max",
         "preferred_date_times": Array [],
         "preferred_rooms": Array [],
+        "status": "open",
       },
     },
   },
@@ -126,7 +148,7 @@ Object {
       "locations": Array [
         Object {
           "column": 5,
-          "line": 12,
+          "line": 13,
         },
       ],
       "message": "ValidationError",
@@ -171,7 +193,7 @@ Object {
       "locations": Array [
         Object {
           "column": 5,
-          "line": 12,
+          "line": 13,
         },
       ],
       "message": "ValidationError",
@@ -180,6 +202,26 @@ Object {
       ],
     },
   ],
+}
+`;
+
+exports[`Update group min age 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "16",
+        "max_age": 83,
+        "member_max": 3,
+        "min_age": 1,
+        "name": "Update group min age",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+        "status": "open",
+      },
+    },
+  },
 }
 `;
 
@@ -196,6 +238,7 @@ Object {
         "name": "This is my updated group name",
         "preferred_date_times": Array [],
         "preferred_rooms": Array [],
+        "status": "open",
       },
     },
   },
@@ -235,7 +278,7 @@ Object {
       "locations": Array [
         Object {
           "column": 5,
-          "line": 12,
+          "line": 13,
         },
       ],
       "message": "ValidationError",
@@ -280,7 +323,7 @@ Object {
       "locations": Array [
         Object {
           "column": 5,
-          "line": 12,
+          "line": 13,
         },
       ],
       "message": "ValidationError",
@@ -289,5 +332,54 @@ Object {
       ],
     },
   ],
+}
+`;
+
+exports[`Update group room preference 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "18",
+        "max_age": 83,
+        "member_max": 3,
+        "min_age": 31,
+        "name": "Update group room preference",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [
+          Object {
+            "id": "1",
+            "name": "Magic Shop",
+          },
+          Object {
+            "id": "2",
+            "name": "The Egyptians",
+          },
+        ],
+        "status": "open",
+      },
+    },
+  },
+}
+`;
+
+exports[`Update group room preference, empty 1`] = `
+Object {
+  "data": Object {
+    "updateGroup": Object {
+      "group": Object {
+        "description": "Excepteur anim eiusmod ipsum ea enim.",
+        "id": "19",
+        "max_age": 83,
+        "member_max": 3,
+        "min_age": 31,
+        "name": "Update room preference empty",
+        "preferred_date_times": Array [],
+        "preferred_rooms": Array [],
+        "status": "open",
+      },
+    },
+  },
 }
 `;

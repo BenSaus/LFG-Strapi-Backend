@@ -91,4 +91,8 @@ module.exports = {
             throw err;
         }
     },
+
+    // async updateGroup(ctx) {
+    // leader only
+    // }
 };

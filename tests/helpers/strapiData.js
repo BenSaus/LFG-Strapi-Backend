@@ -7,10 +7,12 @@ async function strapiData(strapi, requestUser) {
     if (!instance) {
         const groups = await getGroups(strapi, requestUser);
         const users = await getUsers(strapi, requestUser);
+        const rooms = await getRooms(strapi, requestUser);
 
         instance = {};
         instance.groups = groups;
         instance.users = users;
+        instance.rooms = rooms;
         instance.userByName = getUsersByName(users);
     }
 
@@ -64,6 +66,26 @@ async function getGroups(strapi, requestUser) {
         .set("accept", "application/json");
 
     return resp.body.data.groups;
+}
+
+async function getRooms(strapi, requestUser) {
+    const query = `
+        query {
+            rooms{
+                id
+                name
+            }
+        }
+    `;
+
+    const resp = await request(strapi.server)
+        .post("/graphql")
+        .send({ query: query })
+        .set("Authorization", "Bearer " + requestUser.jwt)
+        .set("Content-Type", "application/json")
+        .set("accept", "application/json");
+
+    return resp.body.data.rooms;
 }
 
 module.exports = strapiData;

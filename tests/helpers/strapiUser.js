@@ -3,21 +3,23 @@ const request = require("supertest");
 const graphql = require("./graphql");
 
 const mockUserData = {
-    username: "testUser",
-    email: "testUser@strapi.com",
+    // username: "testUser",
+    // email: "testUser@strapi.com",
     provider: "local",
     password: "1234abc",
     confirmed: true,
     blocked: null,
     hide_age: false,
     approved: true,
-    role: null,
+    // role: null,
 };
 
 // Singleton
 let instance;
 
-async function createTestUser() {
+const TEST_USER_NUMBER = 3;
+
+async function createTestUsers() {
     if (!instance) {
         const defaultRole = await strapi
             .query("role", "users-permissions")
@@ -25,29 +27,36 @@ async function createTestUser() {
 
         const role = defaultRole ? defaultRole.id : null;
 
-        /** Creates a new user and push to database */
-        const user = await strapi.plugins[
-            "users-permissions"
-        ].services.user.add({
-            ...mockUserData,
-            username: "testUser",
-            email: "testUser@strapi.com",
-            role,
-        });
+        const users = [];
+        for (let x = 0; x < TEST_USER_NUMBER; x++) {
+            /** Creates a new user and push to database */
+            const user = await strapi.plugins[
+                "users-permissions"
+            ].services.user.add({
+                ...mockUserData,
+                // Overwrite the following fields
+                username: `testUser${x}`,
+                email: `testUser${x}@strapi.com`,
+                role,
+            });
 
-        const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
-            id: user.id,
-        });
+            const jwt = strapi.plugins["users-permissions"].services.jwt.issue({
+                id: user.id,
+            });
+            user.jwt = jwt;
 
-        instance = user;
-        instance.jwt = jwt;
+            users.push(user);
+        }
+
+        instance = {};
+        instance.users = users;
     }
 
     return instance;
 }
 
-function getTestUser() {
-    return instance;
+function getTestUsers() {
+    return instance.users;
 }
 
 async function loginAs(username, password) {
@@ -89,7 +98,7 @@ async function setPublicPermissions() {
 module.exports = {
     setAuthenticatedPermissions,
     setPublicPermissions,
-    createTestUser,
-    getTestUser,
+    createTestUsers,
+    getTestUsers,
     loginAs,
 };

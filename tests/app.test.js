@@ -1,14 +1,15 @@
-const fs = require('fs')
+const fs = require("fs");
 const { setupStrapi } = require("./helpers/strapi");
 const strapiUser = require("./helpers/strapiUser");
 const loadStrapiData = require("./helpers/strapiData");
 
-
 beforeAll(async (done) => {
     await setupStrapi();
-    const testUser = await strapiUser.createTestUser();
+    const testUsers = await strapiUser.createTestUsers();
     await strapiUser.setAuthenticatedPermissions();
-    await loadStrapiData(strapi, testUser);
+
+    const loadedData = await loadStrapiData(strapi, testUsers.users[0]);
+    console.log(loadedData.rooms);
     done();
 });
 
