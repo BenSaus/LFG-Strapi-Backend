@@ -14,7 +14,7 @@ let testUser = null;
 let lfgActions = null;
 
 beforeAll(async (done) => {
-    lfgActions = new LFGActions(strapi)
+    lfgActions = new LFGActions(strapi);
 
     const testUsers = await strapiUser.getTestUsers();
     testUser = testUsers[0];
@@ -53,6 +53,7 @@ it("Get Groups", async (done) => {
     done();
 });
 
+
 it("Create group", async (done) => {
     const variables = { ...mockData.createGroupData, leader: testUser.id };
 
@@ -71,7 +72,7 @@ it("Create group", async (done) => {
 
 it("Update group description", async (done) => {
     // create group through direct global strapi instance
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.updateDescriptionGroup,
         testUser,
         "Update group description"
@@ -85,7 +86,7 @@ it("Update group description", async (done) => {
 });
 
 it("Update group name", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.updateNameGroup,
         testUser,
         "Update group name"
@@ -122,7 +123,7 @@ it("Update group name, error non-unique name", async (done) => {
 });
 
 it("Update group name, error empty name", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Error Empty Name"
@@ -140,7 +141,7 @@ it("Update group name, error empty name", async (done) => {
 });
 
 it("Update group name, error one space name", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Error One Space Name"
@@ -158,7 +159,7 @@ it("Update group name, error one space name", async (done) => {
 });
 
 it("Update group member max", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Update group member max"
@@ -175,7 +176,7 @@ it("Update group member max", async (done) => {
 });
 
 it("Update group member max, error invalid member max", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Error invalid member max - min"
@@ -193,7 +194,7 @@ it("Update group member max, error invalid member max", async (done) => {
 });
 
 it("Update group member max, error invalid member max - max", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Error invalid member max - max"
@@ -211,7 +212,7 @@ it("Update group member max, error invalid member max - max", async (done) => {
 });
 
 it("Update group min age", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Update group min age"
@@ -228,7 +229,7 @@ it("Update group min age", async (done) => {
 });
 
 it("Update group max age", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Update group max age"
@@ -245,7 +246,7 @@ it("Update group max age", async (done) => {
 });
 
 it("Update group room preference", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Update group room preference"
@@ -263,7 +264,7 @@ it("Update group room preference", async (done) => {
 });
 
 it("Update group room preference, empty", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Update room preference empty"
@@ -288,7 +289,6 @@ it("Non-leader update, error not authorized", async (done) => {
     done();
 });
 
-
 // TODO:
 // it("Open group")
 // it("Delete group")
@@ -297,7 +297,7 @@ it("Non-leader update, error not authorized", async (done) => {
 // ONLY LEADER and only my groups
 
 it("Close group", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Close group"
@@ -313,7 +313,7 @@ it("Close group", async (done) => {
 });
 
 it("Open group", async (done) => {
-    const group = await lfgActions.userCreateGroup(
+    const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
         "Open group"
@@ -328,7 +328,5 @@ it("Open group", async (done) => {
     done();
 });
 
-
-
-// TODO:
-// it("Cannot Close group with no members")
+TODO:
+it("Cannot Close group with no members")

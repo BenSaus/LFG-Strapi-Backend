@@ -9,7 +9,6 @@ beforeAll(async (done) => {
     await strapiUser.setAuthenticatedPermissions();
 
     const loadedData = await loadStrapiData(strapi, testUsers.users[0]);
-    console.log(loadedData.rooms);
     done();
 });
 
