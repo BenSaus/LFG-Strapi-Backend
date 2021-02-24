@@ -30,5 +30,13 @@ module.exports = {
             throw err;
         }
 
+    },
+
+    userMustBeAGroupMemeber: (group, userId) => {
+        if(group.members.map((user) => user.id).includes(userId) === false) {
+            const err = new Error(errorCodes.MEMBER_NOT_FOUND.message);
+            err.status = errorCodes.MEMBER_NOT_FOUND.code;
+            throw err;
+        }
     }
 }

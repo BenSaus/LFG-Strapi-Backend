@@ -21,5 +21,6 @@ it("strapi is defined", () => {
 require("./group/createGroup");
 require("./group/openClose");
 require("./group/removeMember");
+require("./group/leaveGroup");
 require("./group/updateGroup");
 require("./invite/invite");

@@ -42,7 +42,7 @@ module.exports = {
                 model: strapi.models.invite,
             });
         } catch (error) {
-            throw error;
+            check.throwInternalServerError(error)
         }
     },
 
@@ -101,7 +101,7 @@ module.exports = {
                 }),
             };
         } catch (error) {
-            throw error;
+            check.throwInternalServerError(error)
         }
     },
 
@@ -129,7 +129,7 @@ module.exports = {
                 model: strapi.models.invite,
             });
         } catch (error) {
-            throw error;
+            check.throwInternalServerError(error)
         }
     },
 
@@ -156,7 +156,7 @@ module.exports = {
                 model: strapi.models.invite,
             });
         } catch (error) {
-            throw error;
+            check.throwInternalServerError(error)
         }
     },
 };

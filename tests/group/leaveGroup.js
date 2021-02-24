@@ -17,13 +17,13 @@ beforeAll(async (done) => {
 });
 
 
-it("Remove member", async (done) => {
+it("Leave group", async (done) => {
     const testUser2 = testUsers[1];
 
     const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
-        "Remove member"
+        "Leave group"
     );
 
     const { invite } = await lfgActions.leaderCreateInvite(
@@ -34,13 +34,13 @@ it("Remove member", async (done) => {
 
     await lfgActions.userAcceptInvite(testUser2, invite.id);
 
-    const { group: postGroup, errors } = await lfgActions.leaderRemoveMember(
-        testUser,
+    const { response, group: postGroup, errors } = await lfgActions.memberLeaveGroup(
+        testUser2,
         group.id,
-        testUser2.id
     );
 
     expect(errors).toBeUndefined();
+    expect(postGroup).toBeDefined();
     expect(postGroup.members.length).toBe(0);
 
     done();
@@ -48,8 +48,6 @@ it("Remove member", async (done) => {
 
 
 // TODO:
-// Remove a member of a group you are not the leader of (Not Authorized)
-// Remove a non existant member (Member not found)
-// Remove a user that is not a member of the group (Member not found)
-// Member not found
+// Leave a group you are not in (Not Authorized)
+// Leave a group that you are leader of
 // Group not found

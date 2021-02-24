@@ -19,7 +19,6 @@ beforeAll(async (done) => {
     done();
 });
 
-
 it("Create group", async (done) => {
     const variables = { ...mockData.createGroupData, leader: testUser.id };
     const resp = await utils.call(
@@ -28,6 +27,7 @@ it("Create group", async (done) => {
         variables
     );
 
+    expect(resp.body.errors).toBeUndefined();
     expect(resp.body).toMatchSnapshot();
     done();
 });

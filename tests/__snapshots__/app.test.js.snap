@@ -66,6 +66,10 @@ Object {
         "id": "11",
         "name": "Remove member",
       },
+      Object {
+        "id": "12",
+        "name": "Leave group",
+      },
     ],
   },
 }
@@ -77,7 +81,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "updated description",
-        "id": "12",
+        "id": "13",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -97,7 +101,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "22",
+        "id": "23",
         "max_age": 99,
         "member_max": 3,
         "min_age": 31,
@@ -117,7 +121,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "18",
+        "id": "19",
         "max_age": 83,
         "member_max": 8,
         "min_age": 31,
@@ -227,7 +231,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "21",
+        "id": "22",
         "max_age": 83,
         "member_max": 3,
         "min_age": 1,
@@ -247,7 +251,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "13",
+        "id": "14",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -357,7 +361,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "23",
+        "id": "24",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -386,7 +390,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "24",
+        "id": "25",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,

@@ -36,6 +36,7 @@ const authenticatedPermissions = {
                     findone: { enabled: true, policy: "" },
                     update: { enabled: true, policy: "" },
                     removeMember: { enabled: true, policy: "" },
+                    leaveGroup: { enabled: true, policy: "" },
                 },
                 invite: {
                     accept: { enabled: true, policy: "" },
