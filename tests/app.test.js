@@ -12,24 +12,14 @@ beforeAll(async (done) => {
     done();
 });
 
-// NOTE: Doesn't seem to work. Used rm command in npm script instead
-// afterAll(async done => {
-//     const dbSettings = strapi.config.get('database.connections.default.settings');
-//     //delete test database after all tests
-//     if (dbSettings && dbSettings.filename) {
-//       const tmpDbFile = `${__dirname}/../${dbSettings.filename}`;
-//       if (fs.existsSync(tmpDbFile)) {
-//         fs.unlinkSync(tmpDbFile);
-//       }
-//     }
-//     done();
-//   });
-
 it("strapi is defined", () => {
     expect(strapi).toBeDefined();
 });
 
 // Include these test files
-// require("./user");
-require("./group/group");
+// WARNING: Changing the order here will alter create conflicts with snapshots because DB ids are sequential
+require("./group/createGroup");
+require("./group/openClose");
+require("./group/removeMember");
+require("./group/updateGroup");
 require("./invite/invite");

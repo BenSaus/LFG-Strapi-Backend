@@ -50,6 +50,22 @@ Object {
         "id": "7",
         "name": "Agitated Ardvarks",
       },
+      Object {
+        "id": "8",
+        "name": "Create Group",
+      },
+      Object {
+        "id": "9",
+        "name": "Close group",
+      },
+      Object {
+        "id": "10",
+        "name": "Open group",
+      },
+      Object {
+        "id": "11",
+        "name": "Remove member",
+      },
     ],
   },
 }
@@ -61,7 +77,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "updated description",
-        "id": "9",
+        "id": "12",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -81,7 +97,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "17",
+        "id": "22",
         "max_age": 99,
         "member_max": 3,
         "min_age": 31,
@@ -101,7 +117,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "13",
+        "id": "18",
         "max_age": 83,
         "member_max": 8,
         "min_age": 31,
@@ -211,7 +227,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "16",
+        "id": "21",
         "max_age": 83,
         "member_max": 3,
         "min_age": 1,
@@ -231,7 +247,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "10",
+        "id": "13",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -341,7 +357,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "18",
+        "id": "23",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,
@@ -370,7 +386,7 @@ Object {
     "updateGroup": Object {
       "group": Object {
         "description": "Excepteur anim eiusmod ipsum ea enim.",
-        "id": "19",
+        "id": "24",
         "max_age": 83,
         "member_max": 3,
         "min_age": 31,

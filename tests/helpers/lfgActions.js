@@ -1,23 +1,12 @@
 const request = require("supertest");
 const graphql = require("./graphql");
+const utils = require("./utils")
 
 // REMEMBER: NO LOGIC IS ALLOWED HERE
 
 class LFGActions {
     constructor(strapi) {
         this.strapi = strapi;
-
-        this._call = function (jwt, query, variables) {
-            return request(this.strapi.server)
-                .post("/graphql")
-                .send({
-                    query,
-                    variables,
-                })
-                .set("Authorization", "Bearer " + jwt)
-                .set("Content-Type", "application/json")
-                .set("accept", "application/json");
-        };
 
         this.userCreateGroup = async function (groupData, leaderUser, name) {
             // Group names must be unique, so we overwrite the group name here
@@ -26,7 +15,7 @@ class LFGActions {
 
             // WARNING: TODO: Passing leader information in variables is temporary until the create group endpoint is updated
             const variables = { ...modGroupData, leader: leaderUser.id };
-            const resp = await this._call(
+            const resp = await utils.call(
                 leaderUser.jwt,
                 graphql.mutations.createGroup,
                 variables
@@ -41,7 +30,7 @@ class LFGActions {
                 applicant: user.id,
                 message: "BLANK",
             };
-            const resp = await this._call(
+            const resp = await utils.call(
                 user.jwt,
                 graphql.mutations.createApplication,
                 variables
@@ -55,7 +44,7 @@ class LFGActions {
 
         this.userAcceptInvite = async function (user, inviteId) {
             const variables = { id: inviteId };
-            const resp = await this._call(
+            const resp = await utils.call(
                 user.jwt,
                 graphql.mutations.acceptInvite,
                 variables
@@ -72,7 +61,7 @@ class LFGActions {
 
         this.memberLeaveGroup = async function (user, groupId) {
             const variables = { id: groupId };
-            const resp = await this._call(
+            const resp = await utils.call(
                 user.jwt,
                 graphql.mutations.leaveGroup,
                 variables
@@ -87,7 +76,7 @@ class LFGActions {
             userIdToRemove
         ) {
             const variables = { groupId, memberId: userIdToRemove };
-            const resp = await this._call(
+            const resp = await utils.call(
                 leaderUser.jwt,
                 graphql.mutations.removeMember,
                 variables
@@ -108,13 +97,13 @@ class LFGActions {
                 group: groupId,
                 message: "BLANK",
             };
-            const resp = await this._call(
+            const resp = await utils.call(
                 leaderUser.jwt,
                 graphql.mutations.createInvite,
                 variables
             );
 
-            return { resp, invite: resp.body.data.createInvite.invite };
+            return { resp, invite: resp.body?.data?.createInvite?.invite };
         };
         this.leaderDismissInvite = async function (
             leaderUser,
