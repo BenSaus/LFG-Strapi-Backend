@@ -10,7 +10,6 @@ const { createGroupData } = require("../../../tests/group/mockData");
 module.exports = {
     async removeMember(ctx) {
         const { groupId, memberId: memberIdToRemove } = ctx.request.body;
-
         // VALIDATE IDs
 
         // Verify this request is from the leader of the group
@@ -23,23 +22,43 @@ module.exports = {
             const requestingUserId = ctx.state.user.id;
 
             if (requestingUserId === leaderId) {
-                const updatedMembers = group.members.filter(
-                    // WARNING: Here I am assuming Id's are Numbers!!!
-                    (member) => member.id !== Number(memberIdToRemove)
-                );
+                const memberIdNumber = Number(memberIdToRemove);
 
-                const updatedGroup = {
-                    members: updatedMembers,
-                };
+                if (
+                    group.members
+                        .map((user) => user.id)
+                        .includes(memberIdNumber)
+                ) {
+                    const updatedMembers = group.members.filter(
+                        // WARNING: Here I am assuming Id's are Numbers!!!
+                        (member) => member.id !== memberIdNumber
+                    );
 
-                const entity = await strapi.services.group.update(
-                    { id: groupId },
-                    updatedGroup
-                );
+                    const updatedGroup = {
+                        members: updatedMembers,
+                    };
 
-                return sanitizeEntity(entity, {
-                    model: strapi.models.group,
-                });
+                    try {
+                        const entity = await strapi.services.group.update(
+                            { id: groupId },
+                            updatedGroup
+                        );
+
+                        const sanitizedGroup = sanitizeEntity(entity, {
+                            model: strapi.models.group,
+                        });
+
+                        return { group: sanitizedGroup };
+                    } catch (error) {
+                        const err = new Error("Internal Server Error");
+                        err.status = 500;
+                        throw err;
+                    }
+                } else {
+                    const err = new Error("Member not found");
+                    err.status = 404;
+                    throw err;
+                }
             } else {
                 const err = new Error("Not authorized");
                 err.status = 403;
@@ -73,10 +92,16 @@ module.exports = {
 
                 const updatedGroup = { members: updatedMembers };
 
-                const entity = await strapi.services.group.update(
-                    { id: groupId },
-                    updatedGroup
-                );
+                try {
+                    const entity = await strapi.services.group.update(
+                        { id: groupId },
+                        updatedGroup
+                    );
+                } catch (error) {
+                    const err = new Error("Internal Server Error");
+                    err.status = 500;
+                    throw err;
+                }
 
                 return sanitizeEntity(entity, {
                     model: strapi.models.group,
@@ -93,11 +118,9 @@ module.exports = {
         }
     },
 
-    
     // async createGroup(ctx) {}
     // async updateGroup(ctx) {
     //      leader only
     // }
     // async deleteGroup(ctx) {}
-
 };

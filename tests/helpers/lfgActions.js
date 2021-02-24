@@ -32,7 +32,7 @@ class LFGActions {
                 variables
             );
 
-            return { resp: resp, group: resp.body.data.createGroup.group };
+            return { resp: resp, group: resp.body?.data?.createGroup?.group };
         };
 
         this.userCreateApplication = async function (user, groupId) {
@@ -49,7 +49,7 @@ class LFGActions {
 
             return {
                 resp,
-                application: resp.body.data.createApplication.application,
+                application: resp.body?.data?.createApplication?.application,
             };
         };
 
@@ -61,7 +61,11 @@ class LFGActions {
                 variables
             );
 
-            return { resp, invite: resp.body.data.acceptInvite.invite };
+            return {
+                resp,
+                invite: resp.body?.data?.acceptInvite?.invite,
+                group: resp.body?.data?.acceptInvite?.group,
+            };
         };
 
         this.memberPostChatMessage = async function (userId, groupId) {};
@@ -74,7 +78,7 @@ class LFGActions {
                 variables
             );
 
-            return { resp, group: resp.body.data.leaveGroup.group };
+            return { resp, group: resp.body?.data?.leaveGroup?.group };
         };
 
         this.leaderRemoveMember = async function (
@@ -89,7 +93,7 @@ class LFGActions {
                 variables
             );
 
-            return { resp, group: resp.body.data.removeMember.group };
+            return { resp, group: resp.body?.data?.removeMember?.group };
         };
         this.leaderDeleteGroup = async function (leaderUser, groupId) {};
         this.leaderAddSlot = async function (leaderUser, groupId) {};
@@ -98,7 +102,20 @@ class LFGActions {
             leaderUser,
             groupId,
             inviteeId
-        ) {};
+        ) {
+            const variables = {
+                invitee: inviteeId,
+                group: groupId,
+                message: "BLANK",
+            };
+            const resp = await this._call(
+                leaderUser.jwt,
+                graphql.mutations.createInvite,
+                variables
+            );
+
+            return { resp, invite: resp.body.data.createInvite.invite };
+        };
         this.leaderDismissInvite = async function (
             leaderUser,
             groupId,

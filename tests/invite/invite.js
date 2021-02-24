@@ -1,36 +1,42 @@
-// it("Create Invite", async (done) => {
-//     // Login
-//     const requestingUser = await strapiUser.loginAs("Ben", "123456");
-//     // Get data for invitee
-//     const userToInvite = strapiData.users[0];
+const strapiUser = require("../helpers/strapiUser");
+const LFGActions = require("../helpers/lfgActions");
+const mockData = require("../group/mockData");
 
-//     // Create group
-//     const group = await strapiActions.createGroup(
-//         strapi,
-//         mockGroupData,
-//         requestingUser
-//     );
+let testUser = null;
+let testUsers = null;
+let lfgActions = null;
 
-//     console.log("group", group);
+beforeAll(async (done) => {
+    lfgActions = new LFGActions(strapi);
 
-//     // Invite user to group
-//     const resp = await request(strapi.server)
-//         .post("/graphql")
-//         .send({
-//             query: graphql.mutations.createInvite,
-//             variables: {
-//                 invitee: userToInvite.id,
-//                 group: group.id,
-//                 message: "Heya invite here",
-//             },
-//         }) // NOTE: The query must be in brackets to work
-//         .set("Authorization", "Bearer " + requestingUser.jwt)
-//         .set("Content-Type", "application/json")
-//         .expect(200);
+    testUsers = await strapiUser.getTestUsers();
+    testUser = testUsers[0];
 
-//     console.log(resp.body.data.createInvite);
+    done();
+});
 
-//     expect(resp.body).toMatchSnapshot();
+it("User Accept Invite", async (done) => {
+    const testUser2 = testUsers[1];
 
-//     done();
-// });
+    const { group } = await lfgActions.userCreateGroup(
+        mockData.generalGroupData,
+        testUser,
+        "User Accept Invite"
+    );
+
+    const { invite } = await lfgActions.leaderCreateInvite(
+        testUser,
+        group.id,
+        testUser2.id
+    );
+
+    const { group: groupPostAcceptInvite } = await lfgActions.userAcceptInvite(
+        testUser2,
+        invite.id
+    );
+
+    expect(groupPostAcceptInvite.members.length).toBe(1);
+    expect(groupPostAcceptInvite.members[0].id).toBe(testUser2.id.toString());
+
+    done();
+});

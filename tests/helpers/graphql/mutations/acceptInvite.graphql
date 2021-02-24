@@ -8,6 +8,10 @@ mutation acceptInvite($id: ID!) {
         group {
             id
             name
+            members {
+                id
+                username
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 mutation removeMember($groupId: ID!, $memberId: ID!) {
     removeMember(groupId: $groupId, memberId: $memberId) {
         group {
+            id
             name
             members {
                 id

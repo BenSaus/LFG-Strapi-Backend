@@ -32,3 +32,4 @@ it("strapi is defined", () => {
 // Include these test files
 // require("./user");
 require("./group/group");
+require("./invite/invite");
