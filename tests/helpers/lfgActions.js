@@ -1,6 +1,6 @@
 const request = require("supertest");
 const graphql = require("./graphql");
-const utils = require("./utils")
+const utils = require("./utils");
 
 // REMEMBER: NO LOGIC IS ALLOWED HERE
 
@@ -21,7 +21,11 @@ class LFGActions {
                 variables
             );
 
-            return { resp: resp, group: resp.body?.data?.createGroup?.group };
+            return {
+                resp,
+                errors: resp.body.errors,
+                group: resp.body?.data?.createGroup?.group,
+            };
         };
 
         this.userCreateApplication = async function (user, groupId) {
@@ -38,6 +42,7 @@ class LFGActions {
 
             return {
                 resp,
+                errors: resp.body.errors,
                 application: resp.body?.data?.createApplication?.application,
             };
         };
@@ -52,6 +57,7 @@ class LFGActions {
 
             return {
                 resp,
+                errors: resp.body.errors,
                 invite: resp.body?.data?.acceptInvite?.invite,
                 group: resp.body?.data?.acceptInvite?.group,
             };
@@ -67,7 +73,11 @@ class LFGActions {
                 variables
             );
 
-            return { resp, group: resp.body?.data?.leaveGroup?.group };
+            return {
+                resp,
+                errors: resp.body.errors,
+                group: resp.body?.data?.leaveGroup?.group,
+            };
         };
 
         this.leaderRemoveMember = async function (
@@ -82,7 +92,11 @@ class LFGActions {
                 variables
             );
 
-            return { resp, group: resp.body?.data?.removeMember?.group };
+            return {
+                resp,
+                errors: resp.body.errors,
+                group: resp.body?.data?.removeMember?.group,
+            };
         };
         this.leaderDeleteGroup = async function (leaderUser, groupId) {};
         this.leaderAddSlot = async function (leaderUser, groupId) {};
@@ -103,7 +117,11 @@ class LFGActions {
                 variables
             );
 
-            return { resp, invite: resp.body?.data?.createInvite?.invite };
+            return {
+                resp,
+                errors: resp.body.errors,
+                invite: resp.body?.data?.createInvite?.invite,
+            };
         };
         this.leaderDismissInvite = async function (
             leaderUser,

@@ -1,5 +1,6 @@
 "use strict";
 const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
+const errorCodes = require("../../errorCodes")
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
@@ -35,12 +36,12 @@ module.exports = {
                 });
             } else {
                 const err = new Error("Not authorized");
-                err.status = 403;
+                err.status = errorCodes.NOT_AUTHORIZED;
                 throw err;
             }
         } else {
             const err = new Error("Group not found");
-            err.status = 404;
+            err.status = errorCodes.GROUP_NOT_FOUND;
             throw err;
         }
     },
@@ -75,7 +76,7 @@ module.exports = {
                     group.members.map((member) => member.id).includes(inviteeId)
                 ) {
                     const err = new Error("Already a member");
-                    err.status = 400;
+                    err.status = errorCodes.ALREADY_A_MEMBER;
                     throw err;
                 }
 
@@ -108,12 +109,12 @@ module.exports = {
                 };
             } else {
                 const err = new Error("Not authorized");
-                err.status = 403;
+                err.status = errorCodes.NOT_AUTHORIZED;
                 throw err;
             }
         } else {
             const err = new Error("Invite not found");
-            err.status = 404;
+            err.status = errorCodes.INVITE_NOT_FOUND;
             throw err;
         }
     },
@@ -143,12 +144,12 @@ module.exports = {
                 });
             } else {
                 const err = new Error("Not authorized");
-                err.status = 403;
+                err.status = errorCodes.NOT_AUTHORIZED;
                 throw err;
             }
         } else {
             const err = new Error("Invite not found");
-            err.status = 404;
+            err.status = errorCodes.INVITE_NOT_FOUND;
             throw err;
         }
     },
@@ -178,12 +179,12 @@ module.exports = {
                 });
             } else {
                 const err = new Error("Not authorized");
-                err.status = 403;
+                err.status = errorCodes.NOT_AUTHORIZED;
                 throw err;
             }
         } else {
             const err = new Error("Invite not found");
-            err.status = 404;
+            err.status = errorCodes.INVITE_NOT_FOUND;
             throw err;
         }
     },

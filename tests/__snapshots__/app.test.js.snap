@@ -56,11 +56,11 @@ Object {
       },
       Object {
         "id": "9",
-        "name": "Close group",
+        "name": "Open group",
       },
       Object {
         "id": "10",
-        "name": "Open group",
+        "name": "Close group",
       },
       Object {
         "id": "11",
