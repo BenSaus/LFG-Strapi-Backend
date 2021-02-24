@@ -1,3 +1,3 @@
 module.exports = {
-    GROUP_NOT_FOUND: 2000,
+    GROUP_NOT_FOUND: {code: 2000, message: "Group not found"},
 }

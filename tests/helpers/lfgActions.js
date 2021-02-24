@@ -22,7 +22,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 group: resp.body?.data?.createGroup?.group,
             };
@@ -41,7 +41,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 application: resp.body?.data?.createApplication?.application,
             };
@@ -56,7 +56,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 invite: resp.body?.data?.acceptInvite?.invite,
                 group: resp.body?.data?.acceptInvite?.group,
@@ -74,7 +74,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 group: resp.body?.data?.leaveGroup?.group,
             };
@@ -93,7 +93,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 group: resp.body?.data?.removeMember?.group,
             };
@@ -118,7 +118,7 @@ class LFGActions {
             );
 
             return {
-                resp,
+                response: resp,
                 errors: resp.body.errors,
                 invite: resp.body?.data?.createInvite?.invite,
             };

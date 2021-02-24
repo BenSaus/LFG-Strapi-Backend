@@ -1,10 +1,9 @@
 const strapiUser = require("../helpers/strapiUser");
 const LFGActions = require("../helpers/lfgActions");
 const mockData = require("../group/mockData");
-const errorCodes = require("../../api/errorCodes")
+const errorCodes = require("../../api/errorCodes");
 
-
-const INVALID_ID = 9999999
+const INVALID_ID = 999999;
 
 let testUser = null;
 let testUsers = null;
@@ -34,49 +33,48 @@ it("User Accept Invite", async (done) => {
         testUser2.id
     );
 
-    const { group: groupPostAcceptInvite } = await lfgActions.userAcceptInvite(
+    const { group: groupPostAcceptInvite, errors } = await lfgActions.userAcceptInvite(
         testUser2,
         invite.id
     );
 
+    expect(groupPostAcceptInvite).toBeDefined();
     expect(groupPostAcceptInvite.members.length).toBe(1);
     expect(groupPostAcceptInvite.members[0].id).toBe(testUser2.id.toString());
 
     done();
 });
 
-// it("User accept invite, error already accepted", async (done) => {
-//     const testUser2 = testUsers[1];
+it("User accept invite, error invite already decided", async (done) => {
+    const testUser2 = testUsers[1];
 
-//     const { group } = await lfgActions.userCreateGroup(
-//         mockData.generalGroupData,
-//         testUser,
-//         "Error invite already accepted"
-//     );
+    const { group } = await lfgActions.userCreateGroup(
+        mockData.generalGroupData,
+        testUser,
+        "Error invite already decided"
+    );
 
-//     const { invite } = await lfgActions.leaderCreateInvite(
-//         testUser,
-//         group.id,
-//         testUser2.id
-//     );
+    const { invite } = await lfgActions.leaderCreateInvite(
+        testUser,
+        group.id,
+        testUser2.id
+    );
 
-//     await lfgActions.userAcceptInvite(
-//         testUser2,
-//         invite.id
-//     );
-//     const { group: groupPostAcceptInvite } = await lfgActions.userAcceptInvite(
-//         testUser2,
-//         invite.id
-//     );
+    await lfgActions.userAcceptInvite(
+        testUser2,
+        invite.id
+    );
 
-//     // expect(errors).toBeDefined();
-//     // expect(errors[0].message).toBe("ValidationError");
+    const { errors } = await lfgActions.userAcceptInvite(testUser2, invite.id);
 
-//     expect(groupPostAcceptInvite.members.length).toBe(1);
-//     expect(groupPostAcceptInvite.members[0].id).toBe(testUser2.id.toString());
+    expect(errors[0]).toBeDefined();
+    expect(errors[0].message).toBe(errorCodes.INVITE_ALREADY_DECIDED.message);
+    expect(errors[0].extensions.exception.status).toBe(
+        errorCodes.INVITE_ALREADY_DECIDED.code
+    );
 
-//     done();
-// });
+    done();
+});
 
 it("User accept invite, error invalid invite id", async (done) => {
     const testUser2 = testUsers[1];
@@ -96,8 +94,37 @@ it("User accept invite, error invalid invite id", async (done) => {
     const { errors } = await lfgActions.userAcceptInvite(testUser2, INVALID_ID);
 
     expect(errors[0]).toBeDefined();
-    expect(errors[0].message).toBe("Invite not found");
-    expect(errors[0].extensions.exception.status).toBe(errorCodes.INVITE_NOT_FOUND);
+    expect(errors[0].message).toBe(errorCodes.INVITE_NOT_FOUND.message);
+    expect(errors[0].extensions.exception.status).toBe(
+        errorCodes.INVITE_NOT_FOUND.code
+    );
+
+    done();
+});
+
+it("User accept invite, error accept not authorized", async (done) => {
+    const testUser2 = testUsers[1];
+    const testUser3 = testUsers[2];
+
+    const { group } = await lfgActions.userCreateGroup(
+        mockData.generalGroupData,
+        testUser,
+        "error accept not authorized"
+    );
+
+    const { invite } = await lfgActions.leaderCreateInvite(
+        testUser,
+        group.id,
+        testUser2.id
+    );
+
+    const { errors } = await lfgActions.userAcceptInvite(testUser3, invite.id);
+
+    expect(errors[0]).toBeDefined();
+    expect(errors[0].message).toBe(errorCodes.NOT_AUTHORIZED.message);
+    expect(errors[0].extensions.exception.status).toBe(
+        errorCodes.NOT_AUTHORIZED.code
+    );
 
     done();
 });
