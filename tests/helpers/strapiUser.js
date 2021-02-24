@@ -35,8 +35,8 @@ async function createTestUsers() {
             ].services.user.add({
                 ...mockUserData,
                 // Overwrite the following fields
-                username: `testUser${x}`,
-                email: `testUser${x}@strapi.com`,
+                username: `testUser${x + 1}`,
+                email: `testUser${x + 1}@strapi.com`,
                 role,
             });
 

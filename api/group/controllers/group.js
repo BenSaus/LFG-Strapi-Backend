@@ -1,8 +1,6 @@
 "use strict";
-const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
-const { createGroupData } = require("../../../tests/group/mockData");
+const { sanitizeEntity } = require("strapi-utils");
 const check = require("../../checkFunctions");
-const checkFunctions = require("../../invite/controllers/checkFunctions");
 
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
@@ -23,7 +21,7 @@ module.exports = {
 
         check.groupMustBeValid(group);
         check.requestorMustBeGroupLeader(group, requestingUserId);
-        check.userMustBeAGroupMemeber(group, memberIdToRemove);
+        check.userMustBeAGroupMember(group, memberIdToRemove);
 
         try {
             const updatedMembers = group.members.filter(
@@ -61,7 +59,7 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
-        check.userMustBeAGroupMemeber(group, requestingUserId);
+        check.userMustBeAGroupMember(group, requestingUserId);
 
         try {
             const updatedMembers = group.members.filter(

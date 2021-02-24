@@ -133,3 +133,8 @@ it("User accept invite, error accept not authorized", async (done) => {
 // Accept invite not intended for the user (not authorized)
 // Accept invite that has already been decided on (not authorized)
 //
+
+
+it("User reject invite", async(done) => {
+    done();
+})
