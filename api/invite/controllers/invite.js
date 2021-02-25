@@ -10,8 +10,6 @@ const errorCodes = require("../../errorCodes");
 const INVITE_STATUS_UNDECIDED = "undecided";
 const INVITE_STATUS_REJECTED = "rejected";
 
-
-
 module.exports = {
     async create(ctx) {
         const inviteeId = ctx.request.body.invitee;
@@ -20,7 +18,6 @@ module.exports = {
         const requestingUserId = ctx.state.user.id;
 
         // TOOD: VALIDATE HERE...
-        // TOOD: ensure invitee exists
 
         const group = await strapi.services.group.findOne({
             id: groupId,
@@ -28,6 +25,8 @@ module.exports = {
 
         check.groupMustBeValid(group);
         check.requestorMustBeGroupLeader(group, requestingUserId);
+
+        // TODO: Check that a corresponding application does not exist!!!!!
 
         try {
             const newInvite = await strapi.services.invite.create({
@@ -42,7 +41,7 @@ module.exports = {
                 model: strapi.models.invite,
             });
         } catch (error) {
-            check.throwInternalServerError(error)
+            check.throwInternalServerError(error);
         }
     },
 
@@ -101,7 +100,7 @@ module.exports = {
                 }),
             };
         } catch (error) {
-            check.throwInternalServerError(error)
+            check.throwInternalServerError(error);
         }
     },
 
@@ -129,9 +128,9 @@ module.exports = {
                 model: strapi.models.invite,
             });
 
-            return { invite: sanitizedInvite }
+            return { invite: sanitizedInvite };
         } catch (error) {
-            check.throwInternalServerError(error)
+            check.throwInternalServerError(error);
         }
     },
 
@@ -158,7 +157,7 @@ module.exports = {
                 model: strapi.models.invite,
             });
         } catch (error) {
-            check.throwInternalServerError(error)
+            check.throwInternalServerError(error);
         }
     },
 };

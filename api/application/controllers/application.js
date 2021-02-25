@@ -1,9 +1,9 @@
 "use strict";
 const { parseMultipartData, sanitizeEntity } = require("strapi-utils");
-/**
- * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
- * to customize this controller
- */
+const errorCodes = require("../../errorCodes");
+const check = require("../../checkFunctions");
+
+const APPLICATION_STATUS_UNDECIDED = "undecided";
 
 module.exports = {
     /**
@@ -13,60 +13,44 @@ module.exports = {
      */
 
     async create(ctx) {
-        const applicantId = ctx.request.body.applicant;
         const message = ctx.request.body.message;
-        const groupId = ctx.stat.body.group;
+        const groupId = ctx.request.body.group;
         const requestingUserId = ctx.state.user.id;
 
         // TODO: VALIDATE HERE...
 
-        // Requestor can only create applications for themselves, applicant ID and requestingUserId must match
-        if (Number(applicantId) === requestingUserId) {
-            // Group must exist
-            const group = await strapi.services.group.findOne({ id: groupId });
+        // Group must exist
+        const group = await strapi.services.group.findOne({ id: groupId });
 
-            if (group !== null) {
-                // Requestor cannot be a member of the group already
-                for (const member of group.members) {
-                    if (member.id === Number(applicantId)) {
-                        const err = new Error("Already a member");
-                        err.status = 403;
-                        throw err;
-                    }
-                }
+        check.groupMustBeValid(group);
+        check.requestorMustNotBeAMemberOfGroup(group, requestingUserId);
 
-                // Check for duplicate applications
-                const application = await strapi.services.application.findOne({
-                    applicant: userId,
-                    group: groupId,
-                });
+        // Check for duplicate applications
+        const application = await strapi.services.application.findOne({
+            applicant: requestingUserId,
+            group: groupId,
+        });
+        check.applicationMustNotAlreadyExist(application);
 
-                if (application) {
-                    const err = new Error("Existing application found");
-                    err.status = 403;
-                    throw err;
-                } else {
-                    const newApplication = await strapi.services.application.create(
-                        {
-                            applicant: requestingUserId,
-                            group: groupId,
-                            message,
-                            status: "undecided",
-                        }
-                    );
-                    return sanitizeEntity(newApplication, {
-                        model: strapi.models.application,
-                    });
-                }
-            } else {
-                const err = new Error("Group not found");
-                err.status = 404;
-                throw err;
-            }
-        } else {
-            const err = new Error("Not authorized");
-            err.status = 403;
-            throw err;
+        // Check that a corresponding invite does not exist
+        const invite = await strapi.services.invite.findOne({
+            invitee: requestingUserId,
+            group: groupId,
+        });
+        check.inviteMustNotExist(invite);
+
+        try {
+            const newApplication = await strapi.services.application.create({
+                applicant: requestingUserId,
+                group: groupId,
+                message,
+                status: APPLICATION_STATUS_UNDECIDED,
+            });
+            return sanitizeEntity(newApplication, {
+                model: strapi.models.application,
+            });
+        } catch (error) {
+            check.throwInternalServerError(error);
         }
     },
 

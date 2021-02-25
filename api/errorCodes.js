@@ -1,10 +1,12 @@
 
 const inviteErrorCodes = require('./invite/controllers/errorCodes')
+const applicationErrorCodes = require('./application/controllers/errorCodes')
 const groupErrorCodes = require('./group/controllers/errorCodes')
 
 
 module.exports = {
     ...inviteErrorCodes,
+    ...applicationErrorCodes,
     ...groupErrorCodes,
 
     // General error codes
