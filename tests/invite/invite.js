@@ -49,6 +49,7 @@ it("User accept Invite", async (done) => {
     expect(invitePostAccept.status).toBe(INVITE_STATUS_ACCEPTED);
     expect(invitePostAccept.invitee.id).toBe(testUser2.id.toString());
     expect(invitePostAccept.message).toBe(message);
+    expect(invitePostAccept.group_leader_dismissed).toBe(false);
     
     expect(invitePostAccept.group).toBeDefined();
     expect(invitePostAccept.group.id).toBe(group.id);
