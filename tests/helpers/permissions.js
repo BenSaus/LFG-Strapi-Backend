@@ -40,6 +40,7 @@ const authenticatedPermissions = {
                 },
                 invite: {
                     accept: { enabled: true, policy: "" },
+                    reject: { enabled: true, policy: "" },
                     count: { enabled: true, policy: "" },
                     create: { enabled: true, policy: "" },
                     delete: { enabled: true, policy: "" },

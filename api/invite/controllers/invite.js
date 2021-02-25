@@ -125,9 +125,11 @@ module.exports = {
                 }
             );
 
-            return sanitizeEntity(updatedInvite, {
+            const sanitizedInvite = sanitizeEntity(updatedInvite, {
                 model: strapi.models.invite,
             });
+
+            return { invite: sanitizedInvite }
         } catch (error) {
             check.throwInternalServerError(error)
         }

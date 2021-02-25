@@ -4,6 +4,8 @@ const mockData = require("../group/mockData");
 const errorCodes = require("../../api/errorCodes");
 
 const INVALID_ID = 999999;
+const INVITE_STATUS_ACCEPTED = "accepted";
+const INVITE_STATUS_REJECTED = "rejected";
 
 let testUser = null;
 let testUsers = null;
@@ -18,13 +20,13 @@ beforeAll(async (done) => {
     done();
 });
 
-it("User Accept Invite", async (done) => {
+it("User accept Invite", async (done) => {
     const testUser2 = testUsers[1];
 
     const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
-        "User Accept Invite"
+        "User accept Invite"
     );
 
     const { invite } = await lfgActions.leaderCreateInvite(
@@ -33,14 +35,20 @@ it("User Accept Invite", async (done) => {
         testUser2.id
     );
 
-    const { group: groupPostAcceptInvite, errors } = await lfgActions.userAcceptInvite(
-        testUser2,
-        invite.id
-    );
+    const {
+        invite: invitePostAccept,
+        group: groupPostAccept,
+        errors,
+    } = await lfgActions.userAcceptInvite(testUser2, invite.id);
 
-    expect(groupPostAcceptInvite).toBeDefined();
-    expect(groupPostAcceptInvite.members.length).toBe(1);
-    expect(groupPostAcceptInvite.members[0].id).toBe(testUser2.id.toString());
+    expect(errors).toBeUndefined();
+
+    expect(invitePostAccept).toBeDefined();
+    expect(invitePostAccept.status).toBe(INVITE_STATUS_ACCEPTED);
+
+    expect(groupPostAccept).toBeDefined();
+    expect(groupPostAccept.members.length).toBe(1);
+    expect(groupPostAccept.members[0].id).toBe(testUser2.id.toString());
 
     done();
 });
@@ -60,10 +68,7 @@ it("User accept invite, error invite already decided", async (done) => {
         testUser2.id
     );
 
-    await lfgActions.userAcceptInvite(
-        testUser2,
-        invite.id
-    );
+    await lfgActions.userAcceptInvite(testUser2, invite.id);
 
     const { errors } = await lfgActions.userAcceptInvite(testUser2, invite.id);
 
@@ -134,7 +139,29 @@ it("User accept invite, error accept not authorized", async (done) => {
 // Accept invite that has already been decided on (not authorized)
 //
 
+it("User reject invite", async (done) => {
+    const testUser2 = testUsers[1];
 
-it("User reject invite", async(done) => {
+    const { group } = await lfgActions.userCreateGroup(
+        mockData.generalGroupData,
+        testUser,
+        "User reject invite"
+    );
+
+    const { invite } = await lfgActions.leaderCreateInvite(
+        testUser,
+        group.id,
+        testUser2.id
+    );
+
+    const {
+        invite: invitePostReject,
+        errors,
+    } = await lfgActions.userRejectInvite(testUser2, invite.id);
+
+    expect(errors).toBeUndefined();
+    expect(invitePostReject).toBeDefined();
+    expect(invitePostReject.status).toBe(INVITE_STATUS_REJECTED);
+
     done();
-})
+});

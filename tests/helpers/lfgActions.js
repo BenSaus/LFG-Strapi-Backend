@@ -8,6 +8,7 @@ class LFGActions {
     constructor(strapi) {
         this.strapi = strapi;
 
+        // Group Functions /////////////////
         this.userCreateGroup = async function (groupData, leaderUser, name) {
             // Group names must be unique, so we overwrite the group name here
             const modGroupData = { ...groupData };
@@ -27,44 +28,7 @@ class LFGActions {
                 group: resp.body?.data?.createGroup?.group,
             };
         };
-
-        this.userCreateApplication = async function (user, groupId) {
-            const variables = {
-                group: groupId,
-                applicant: user.id,
-                message: "BLANK",
-            };
-            const resp = await utils.call(
-                user.jwt,
-                graphql.mutations.createApplication,
-                variables
-            );
-
-            return {
-                response: resp,
-                errors: resp.body.errors,
-                application: resp.body?.data?.createApplication?.application,
-            };
-        };
-
-        this.userAcceptInvite = async function (user, inviteId) {
-            const variables = { id: inviteId };
-            const resp = await utils.call(
-                user.jwt,
-                graphql.mutations.acceptInvite,
-                variables
-            );
-
-            return {
-                response: resp,
-                errors: resp.body.errors,
-                invite: resp.body?.data?.acceptInvite?.invite,
-                group: resp.body?.data?.acceptInvite?.group,
-            };
-        };
-
-        this.memberPostChatMessage = async function (userId, groupId) {};
-
+        this.leaderDeleteGroup = async function (leaderUser, groupId) {};
         this.memberLeaveGroup = async function (user, groupId) {
             const variables = { id: groupId };
             const resp = await utils.call(
@@ -98,9 +62,41 @@ class LFGActions {
                 group: resp.body?.data?.removeMember?.group,
             };
         };
-        this.leaderDeleteGroup = async function (leaderUser, groupId) {};
         this.leaderAddSlot = async function (leaderUser, groupId) {};
         this.leaderRemoveSlot = async function (leaderUser, groupId) {};
+        this.memberPostChatMessage = async function (userId, groupId) {};
+
+        // Invite Functions /////////////////
+        this.userAcceptInvite = async function (user, inviteId) {
+            const variables = { id: inviteId };
+            const resp = await utils.call(
+                user.jwt,
+                graphql.mutations.acceptInvite,
+                variables
+            );
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                invite: resp.body?.data?.acceptInvite?.invite,
+                group: resp.body?.data?.acceptInvite?.group,
+            };
+        };
+        this.userRejectInvite = async function (user, inviteId) {
+            const variables = { id: inviteId };
+            const resp = await utils.call(
+                user.jwt,
+                graphql.mutations.rejectInvite,
+                variables
+            );
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                invite: resp.body?.data?.rejectInvite?.invite,
+                group: resp.body?.data?.rejectInvite?.group,
+            };
+        };
         this.leaderCreateInvite = async function (
             leaderUser,
             groupId,
@@ -128,6 +124,26 @@ class LFGActions {
             groupId,
             inviteId
         ) {};
+
+        // Application Functions /////////////////
+        this.userCreateApplication = async function (user, groupId) {
+            const variables = {
+                group: groupId,
+                applicant: user.id,
+                message: "BLANK",
+            };
+            const resp = await utils.call(
+                user.jwt,
+                graphql.mutations.createApplication,
+                variables
+            );
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                application: resp.body?.data?.createApplication?.application,
+            };
+        };
         this.leaderAcceptApplication = async function (
             applicationId,
             leaderUser
