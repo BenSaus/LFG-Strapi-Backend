@@ -132,7 +132,7 @@ it("Update group name, error one space name", async (done) => {
     const { group } = await lfgActions.userCreateGroup(
         mockData.generalGroupData,
         testUser,
-        "Error One Space Name"
+        "Error one space name"
     );
 
     const variables = { id: group.id, name: " " };

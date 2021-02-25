@@ -14,6 +14,7 @@ mutation acceptInvite($id: ID!) {
                     id
                 }
             }
+            group_leader_dismissed
         }
     }
 }

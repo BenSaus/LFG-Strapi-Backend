@@ -16,6 +16,7 @@ mutation createInvite($invitee: ID!, $group: ID!, $message: String!) {
                 id
                 name
             }
+            group_leader_dismissed
         }
     }
 }

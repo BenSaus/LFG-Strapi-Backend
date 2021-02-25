@@ -1,4 +1,4 @@
-const request = require("supertest");
+
 const graphql = require("./graphql");
 const utils = require("./utils");
 
@@ -21,6 +21,13 @@ class LFGActions {
                 graphql.mutations.createGroup,
                 variables
             );
+
+            // Only intended for test case creation
+            // if(resp.body.errors) {
+            //     for(let error of resp.body.errors) {
+            //         console.log(`🛑 ~ file: LFGActions.js ~ line 26 ~ resp.body.errors`, error, error.extensions?.exception?.data)
+            //     }
+            // }
 
             return {
                 response: resp,
@@ -64,6 +71,18 @@ class LFGActions {
         };
         this.leaderAddSlot = async function (leaderUser, groupId) {};
         this.leaderRemoveSlot = async function (leaderUser, groupId) {};
+
+        this.leaderCloseGroup = async function(leaderUser, groupId) {
+            const variables = { id: groupId, status: "closed" };
+            const resp = await utils.call(leaderUser.jwt, graphql.mutations.updateGroup, variables);   
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                group: resp.body?.data?.removeMember?.group,
+            };
+        }
+
         this.memberPostChatMessage = async function (userId, groupId) {};
 
         // Invite Functions /////////////////
