@@ -24,7 +24,7 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
-        check.requestorMustBeGroupLeader(group, requestingUserId);
+        check.userMustBeGroupLeader(group, requestingUserId);
 
         // TODO: Check that a corresponding application does not exist!!!!!
 
@@ -70,7 +70,7 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
-        check.requestorMustNotBeAMemberOfGroup(group, invite.invitee.id);
+        check.userMustNotBeGroupMember(group, invite.invitee.id);
 
         try {
             // Update Invite

@@ -1,7 +1,6 @@
 module.exports = {
     definition: `
       type acceptApplicationPayload {
-          group: Group
           application: Application
       }
 

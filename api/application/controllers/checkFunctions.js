@@ -2,6 +2,15 @@ const errorCodes = require("../../errorCodes");
 
 module.exports = {
 
+
+    applicationMustBeValid: (application) => {
+        if(application === null) {
+            const err = new Error(errorCodes.APPLICATION_NOT_FOUND.message);
+            err.status = errorCodes.APPLICATION_NOT_FOUND.code;
+            throw err;
+        }
+    },
+
     applicationMustNotAlreadyExist: (application) => {
         if(application !== null) {
             const err = new Error(errorCodes.APPLICATION_ALREADY_EXISTS.message);

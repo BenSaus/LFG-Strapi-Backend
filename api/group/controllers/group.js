@@ -20,8 +20,8 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
-        check.requestorMustBeGroupLeader(group, requestingUserId);
-        check.userMustBeAGroupMember(group, memberIdToRemove);
+        check.userMustBeGroupLeader(group, requestingUserId);
+        check.userMustBeGroupMember(group, memberIdToRemove);
 
         try {
             const updatedMembers = group.members.filter(
@@ -59,7 +59,7 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
-        check.userMustBeAGroupMember(group, requestingUserId);
+        check.userMustBeGroupMember(group, requestingUserId);
 
         try {
             const updatedMembers = group.members.filter(

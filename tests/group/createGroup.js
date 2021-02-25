@@ -27,6 +27,9 @@ it("Create group", async (done) => {
         variables
     );
 
+
+        // TODO: Test description, name, leader id, members, preferrences, age limits, ect........................................
+
     expect(resp.body.errors).toBeUndefined();
     expect(resp.body).toMatchSnapshot();
     done();

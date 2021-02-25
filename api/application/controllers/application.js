@@ -26,9 +26,9 @@ module.exports = {
         check.groupMustBeOpen(group);
 
         // Cannot apply to your own group
-        check.requestorMustNotBeGroupLeader(group, requestingUserId);
-        // Applicant cannot already be a member 
-        check.requestorMustNotBeAMemberOfGroup(group, requestingUserId);
+        check.userMustNotBeGroupLeader(group, requestingUserId);
+        // Applicant cannot already be a member
+        check.userMustNotBeGroupMember(group, requestingUserId);
 
         // Check for duplicate applications
         const application = await strapi.services.application.findOne({
@@ -69,57 +69,46 @@ module.exports = {
         const application = await strapi.services.application.findOne({
             id: applicationId,
         });
+        check.applicationMustBeValid(application);
 
-        if (application !== null) {
-            const group = await strapi.services.group.findOne({
-                id: application.group.id,
-            });
+        // Group must exist
+        const group = await strapi.services.group.findOne({
+            id: application.group.id,
+        });
+        check.groupMustBeValid(group);
 
-            if (group !== null) {
-                // Requestor must be the group leader
-                if (requestingUserId === group.leader.id) {
-                    const applicantId = application.applicant.id;
-                    const currentMemberIds = group.members.map(
-                        (member) => member.id
-                    );
-                    currentMemberIds.push(applicantId);
+        // Only leaders can accept applications
+        check.userMustBeGroupLeader(group, requestingUserId);
+        // The applicant should not already be a member
+        check.userMustNotBeGroupMember(group, application.applicant.id);
 
-                    const updatedApp = await strapi.services.application.update(
-                        { id: applicationId },
-                        {
-                            status: "accepted", // TODO: Change to constants
-                        }
-                    );
-
-                    const updatedGroup = await strapi.services.group.update(
-                        { id: group.id },
-                        {
-                            members: currentMemberIds,
-                        }
-                    );
-
-                    return {
-                        group: sanitizeEntity(updatedGroup, {
-                            model: strapi.models.group,
-                        }),
-                        application: sanitizeEntity(updatedApp, {
-                            model: strapi.models.application,
-                        }),
-                    };
-                } else {
-                    const err = new Error("Not authorized");
-                    err.status = 403;
-                    throw err;
+        try {
+            // Update the application
+            const updatedApp = await strapi.services.application.update(
+                { id: applicationId },
+                {
+                    status: "accepted", // TODO: Change to constants
                 }
-            } else {
-                const err = new Error("Group not found");
-                err.status = 404;
-                throw err;
-            }
-        } else {
-            const err = new Error("Application not found");
-            err.status = 404;
-            throw err;
+            );
+
+            // Add the applicant to the group member list
+            const applicantId = application.applicant.id;
+            const currentMemberIds = group.members.map((member) => member.id);
+            currentMemberIds.push(applicantId);
+            await strapi.services.group.update(
+                { id: group.id },
+                {
+                    members: currentMemberIds,
+                }
+            );
+
+            return {
+                application: sanitizeEntity(updatedApp, {
+                    model: strapi.models.application,
+                }),
+            };
+        } catch (error) {
+            check.throwInternalServerError(error);
         }
     },
 

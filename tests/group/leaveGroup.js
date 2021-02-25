@@ -34,7 +34,7 @@ it("Leave group", async (done) => {
 
     await lfgActions.userAcceptInvite(testUser2, invite.id);
 
-    const { response, group: postGroup, errors } = await lfgActions.memberLeaveGroup(
+    const { group: postGroup, errors } = await lfgActions.memberLeaveGroup(
         testUser2,
         group.id,
     );

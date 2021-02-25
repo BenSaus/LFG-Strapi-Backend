@@ -82,6 +82,16 @@ class LFGActions {
                 group: resp.body?.data?.removeMember?.group,
             };
         }
+        this.leaderOpenGroup = async function(leaderUser, groupId) {
+            const variables = { id: groupId, status: "open" };
+            const resp = await utils.call(leaderUser.jwt, graphql.mutations.updateGroup, variables);   
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                group: resp.body?.data?.removeMember?.group,
+            };
+        }
 
         this.memberPostChatMessage = async function (userId, groupId) {};
 
