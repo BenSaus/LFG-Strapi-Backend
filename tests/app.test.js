@@ -18,9 +18,10 @@ it("strapi is defined", () => {
 
 // Include these test files
 // WARNING: Changing the order here will create conflicts with snapshots because DB ids are sequential
-require("./group/createGroup");
-require("./group/openClose");
-require("./group/removeMember");
-require("./group/leaveGroup");
-require("./group/updateGroup");
-require("./invite/invite");
+// require("./group/createGroup");
+// require("./group/openClose");
+// require("./group/removeMember");
+// require("./group/leaveGroup");
+// require("./group/updateGroup");
+// require("./invite/invite");
+require("./application/application");

@@ -100,12 +100,13 @@ class LFGActions {
         this.leaderCreateInvite = async function (
             leaderUser,
             groupId,
-            inviteeId
+            inviteeId,
+            message=""
         ) {
             const variables = {
                 invitee: inviteeId,
                 group: groupId,
-                message: "BLANK",
+                message,
             };
             const resp = await utils.call(
                 leaderUser.jwt,
@@ -126,11 +127,11 @@ class LFGActions {
         ) {};
 
         // Application Functions /////////////////
-        this.userCreateApplication = async function (user, groupId) {
+        this.userCreateApplication = async function (user, groupId, message="") {
             const variables = {
                 group: groupId,
                 applicant: user.id,
-                message: "BLANK",
+                message,
             };
             const resp = await utils.call(
                 user.jwt,

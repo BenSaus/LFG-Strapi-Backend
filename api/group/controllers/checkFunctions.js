@@ -1,5 +1,8 @@
 const errorCodes = require("../../errorCodes");
 
+
+const GROUP_STATUS_OPEN = "open"
+
 module.exports = {
     groupMustBeValid: (group) => {
         if (group === null) {
@@ -9,9 +12,26 @@ module.exports = {
         }
     },
 
+    groupMustBeOpen: (group) => {
+        if (group.status !== GROUP_STATUS_OPEN) {
+            const err = new Error(errorCodes.GROUP_NOT_OPEN.message);
+            err.status = errorCodes.GROUP_NOT_OPEN.code;
+            throw err;
+        }
+    },
+
     requestorMustBeGroupLeader: (group, requestingUserId) => {
         // WARNING: Assumes group.leader is an object
         if(group.leader.id !== requestingUserId) {
+            const err = new Error(errorCodes.NOT_AUTHORIZED.message);
+            err.status = errorCodes.NOT_AUTHORIZED.code;
+            throw err;
+        }
+    },
+
+    requestorMustNotBeGroupLeader: (group, requestingUserId) => {
+        // WARNING: Assumes group.leader is an object
+        if(group.leader.id === requestingUserId) {
             const err = new Error(errorCodes.NOT_AUTHORIZED.message);
             err.status = errorCodes.NOT_AUTHORIZED.code;
             throw err;

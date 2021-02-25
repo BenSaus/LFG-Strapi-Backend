@@ -11,7 +11,6 @@ module.exports = {
         #}
 
         type acceptInvitePayload {
-            group: Group
             invite: Invite
         }
         type rejectInvitePayload {

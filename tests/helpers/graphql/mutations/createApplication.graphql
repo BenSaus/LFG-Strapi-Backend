@@ -8,8 +8,12 @@ mutation createApplication($group: ID!, $applicant: ID!, $message: String!) {
         application {
             id
             message
+            status
             group {
-                name
+                id
+            }
+            applicant {
+                id
             }
         }
     }

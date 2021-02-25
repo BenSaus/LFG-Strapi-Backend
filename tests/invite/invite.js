@@ -29,15 +29,17 @@ it("User accept Invite", async (done) => {
         "User accept Invite"
     );
 
+    const message = "hello message"
+
     const { invite } = await lfgActions.leaderCreateInvite(
         testUser,
         group.id,
-        testUser2.id
+        testUser2.id,
+        message
     );
 
     const {
         invite: invitePostAccept,
-        group: groupPostAccept,
         errors,
     } = await lfgActions.userAcceptInvite(testUser2, invite.id);
 
@@ -45,10 +47,13 @@ it("User accept Invite", async (done) => {
 
     expect(invitePostAccept).toBeDefined();
     expect(invitePostAccept.status).toBe(INVITE_STATUS_ACCEPTED);
-
-    expect(groupPostAccept).toBeDefined();
-    expect(groupPostAccept.members.length).toBe(1);
-    expect(groupPostAccept.members[0].id).toBe(testUser2.id.toString());
+    expect(invitePostAccept.invitee.id).toBe(testUser2.id.toString());
+    expect(invitePostAccept.message).toBe(message);
+    
+    expect(invitePostAccept.group).toBeDefined();
+    expect(invitePostAccept.group.id).toBe(group.id);
+    expect(invitePostAccept.group.members.length).toBe(1);
+    expect(invitePostAccept.group.members[0].id).toBe(testUser2.id.toString());
 
     done();
 });

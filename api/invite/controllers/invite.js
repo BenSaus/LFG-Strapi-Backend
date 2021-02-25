@@ -92,9 +92,6 @@ module.exports = {
             );
 
             return {
-                group: sanitizeEntity(updatedGroup, {
-                    model: strapi.models.group,
-                }),
                 invite: sanitizeEntity(updatedInvite, {
                     model: strapi.models.invite,
                 }),
@@ -153,9 +150,11 @@ module.exports = {
                 }
             );
 
-            return sanitizeEntity(updatedInvite, {
+            const sanitizedInvite = sanitizeEntity(updatedInvite, {
                 model: strapi.models.invite,
             });
+
+            return { invite: sanitizedInvite };
         } catch (error) {
             check.throwInternalServerError(error);
         }

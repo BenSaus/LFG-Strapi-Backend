@@ -4,13 +4,15 @@ mutation acceptInvite($id: ID!) {
         invite {
             id
             status
-        }
-        group {
-            id
-            name
-            members {
+            message
+            invitee {
                 id
-                username
+            }
+            group {
+                id                
+                members {
+                    id
+                }
             }
         }
     }

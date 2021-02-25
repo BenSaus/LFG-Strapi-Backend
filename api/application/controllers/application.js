@@ -19,10 +19,15 @@ module.exports = {
 
         // TODO: VALIDATE HERE...
 
-        // Group must exist
+        // Group must exist and be open
         const group = await strapi.services.group.findOne({ id: groupId });
 
         check.groupMustBeValid(group);
+        check.groupMustBeOpen(group);
+
+        // Cannot apply to your own group
+        check.requestorMustNotBeGroupLeader(group, requestingUserId);
+        // Applicant cannot already be a member 
         check.requestorMustNotBeAMemberOfGroup(group, requestingUserId);
 
         // Check for duplicate applications
