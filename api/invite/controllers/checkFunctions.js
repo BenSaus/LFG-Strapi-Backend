@@ -39,4 +39,13 @@ module.exports = {
         }
     },
 
+    applicationMustNotExist: (application) => {
+        if(application !== null) {
+            const err = new Error(errorCodes.USER_ALREADY_APPLIED.message);
+            err.status = errorCodes.USER_ALREADY_APPLIED.code;
+            throw err;
+        }
+    }
+
+
 };

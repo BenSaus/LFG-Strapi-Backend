@@ -24,9 +24,16 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
+        check.groupMustBeOpen(group);
+
         check.userMustBeGroupLeader(group, requestingUserId);
 
         // TODO: Check that a corresponding application does not exist!!!!!
+        const application = await strapi.services.application.findOne({
+            applicant: inviteeId,
+            group: groupId
+        })
+        check.applicationMustNotExist(application);
 
         try {
             const newInvite = await strapi.services.invite.create({
@@ -70,6 +77,7 @@ module.exports = {
         });
 
         check.groupMustBeValid(group);
+        check.groupMustBeOpen(group);
         check.userMustNotBeGroupMember(group, invite.invitee.id);
 
         try {

@@ -1,4 +1,3 @@
-
 const graphql = require("./graphql");
 const utils = require("./utils");
 
@@ -23,11 +22,11 @@ class LFGActions {
             );
 
             // Only intended for test case creation
-            // if(resp.body.errors) {
-            //     for(let error of resp.body.errors) {
-            //         console.log(`🛑 ~ file: LFGActions.js ~ line 26 ~ resp.body.errors`, error, error.extensions?.exception?.data)
-            //     }
-            // }
+            if(resp.body.errors) {
+                for(let error of resp.body.errors) {
+                    console.log(`🛑 ~ file: LFGActions.js ~ line 26 ~ resp.body.errors`, error, error.extensions?.exception?.data)
+                }
+            }
 
             return {
                 response: resp,
@@ -35,7 +34,9 @@ class LFGActions {
                 group: resp.body?.data?.createGroup?.group,
             };
         };
+
         this.leaderDeleteGroup = async function (leaderUser, groupId) {};
+
         this.memberLeaveGroup = async function (user, groupId) {
             const variables = { id: groupId };
             const resp = await utils.call(
@@ -69,29 +70,40 @@ class LFGActions {
                 group: resp.body?.data?.removeMember?.group,
             };
         };
+
         this.leaderAddSlot = async function (leaderUser, groupId) {};
+
         this.leaderRemoveSlot = async function (leaderUser, groupId) {};
 
-        this.leaderCloseGroup = async function(leaderUser, groupId) {
+        this.leaderCloseGroup = async function (leaderUser, groupId) {
             const variables = { id: groupId, status: "closed" };
-            const resp = await utils.call(leaderUser.jwt, graphql.mutations.updateGroup, variables);   
+            const resp = await utils.call(
+                leaderUser.jwt,
+                graphql.mutations.updateGroup,
+                variables
+            );
 
             return {
                 response: resp,
                 errors: resp.body.errors,
-                group: resp.body?.data?.removeMember?.group,
+                group: resp.body?.data?.updateGroup?.group,
             };
-        }
-        this.leaderOpenGroup = async function(leaderUser, groupId) {
+        };
+
+        this.leaderOpenGroup = async function (leaderUser, groupId) {
             const variables = { id: groupId, status: "open" };
-            const resp = await utils.call(leaderUser.jwt, graphql.mutations.updateGroup, variables);   
+            const resp = await utils.call(
+                leaderUser.jwt,
+                graphql.mutations.updateGroup,
+                variables
+            );
 
             return {
                 response: resp,
                 errors: resp.body.errors,
-                group: resp.body?.data?.removeMember?.group,
+                group: resp.body?.data?.updateGroup?.group,
             };
-        }
+        };
 
         this.memberPostChatMessage = async function (userId, groupId) {};
 
@@ -108,9 +120,9 @@ class LFGActions {
                 response: resp,
                 errors: resp.body.errors,
                 invite: resp.body?.data?.acceptInvite?.invite,
-                group: resp.body?.data?.acceptInvite?.group,
             };
         };
+
         this.userRejectInvite = async function (user, inviteId) {
             const variables = { id: inviteId };
             const resp = await utils.call(
@@ -123,14 +135,14 @@ class LFGActions {
                 response: resp,
                 errors: resp.body.errors,
                 invite: resp.body?.data?.rejectInvite?.invite,
-                group: resp.body?.data?.rejectInvite?.group,
             };
         };
+
         this.leaderCreateInvite = async function (
             leaderUser,
             groupId,
             inviteeId,
-            message=""
+            message = ""
         ) {
             const variables = {
                 invitee: inviteeId,
@@ -149,6 +161,7 @@ class LFGActions {
                 invite: resp.body?.data?.createInvite?.invite,
             };
         };
+
         this.leaderDismissInvite = async function (
             leaderUser,
             groupId,
@@ -156,7 +169,11 @@ class LFGActions {
         ) {};
 
         // Application Functions /////////////////
-        this.userCreateApplication = async function (user, groupId, message="") {
+        this.userCreateApplication = async function (
+            user,
+            groupId,
+            message = ""
+        ) {
             const variables = {
                 group: groupId,
                 applicant: user.id,
@@ -174,10 +191,27 @@ class LFGActions {
                 application: resp.body?.data?.createApplication?.application,
             };
         };
+
         this.leaderAcceptApplication = async function (
             applicationId,
             leaderUser
-        ) {};
+        ) {
+            const variables = {
+                id: applicationId,
+            };
+            const resp = await utils.call(
+                leaderUser.jwt,
+                graphql.mutations.acceptApplication,
+                variables
+            );
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                application: resp.body?.data?.acceptApplication?.application,
+            };
+        };
+
         this.leaderRejectApplication = async function (
             applicationId,
             leaderUser
