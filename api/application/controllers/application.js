@@ -79,8 +79,10 @@ module.exports = {
 
         // Only leaders can accept applications
         check.userMustBeGroupLeader(group, requestingUserId);
+        
         // The applicant should not already be a member
-        check.userMustNotBeGroupMember(group, application.applicant.id);
+        // TODO: WARNING: If the user is a group member this could be an error state
+        check.userMustNotBeGroupMember(group, application.applicant.id);        
 
         try {
             // Update the application
@@ -122,76 +124,32 @@ module.exports = {
         const application = await strapi.services.application.findOne({
             id: applicationId,
         });
+        check.applicationMustBeValid(application);
 
-        if (application !== null) {
-            const group = await strapi.services.group.findOne({
-                id: application.group.id,
-            });
+        const group = await strapi.services.group.findOne({
+            id: application.group.id,
+        });
+        check.groupMustBeValid(group);
 
-            if (group !== null) {
-                // Requestor must be the group leader
-                if (requestingUserId === group.leader.id) {
-                    const updatedApp = await strapi.services.application.update(
-                        { id: applicationId },
-                        {
-                            status: "rejected", // TODO: Change to constants
-                        }
-                    );
+        // Requestor must be the group leader
+        check.userMustBeGroupLeader(group, requestingUserId);
 
-                    return {
-                        application: sanitizeEntity(updatedApp, {
-                            model: strapi.models.application,
-                        }),
-                    };
-                } else {
-                    const err = new Error("Not authorized");
-                    err.status = 403;
-                    throw err;
+        try {
+            const updatedApp = await strapi.services.application.update(
+                { id: applicationId },
+                {
+                    status: "rejected", // TODO: Change to constants
                 }
-            } else {
-                const err = new Error("Group not found");
-                err.status = 404;
-                throw err;
-            }
-        } else {
-            const err = new Error("Application not found");
-            err.status = 404;
-            throw err;
+            );
+
+            return {
+                application: sanitizeEntity(updatedApp, {
+                    model: strapi.models.application,
+                }),
+            };
+        } catch (error) {
+            check.throwInternalServerError(error);
         }
     },
 
-    /**
-     * The group leader has reject this application
-     *
-     * @return {Object}
-    //  */
-    // async reject(ctx) {
-    //     if (ctx.is("multipart")) {
-    //     } else {
-    //         const appId = ctx.request.body.id;
-    //         const app = await strapi.services.application.findOne({
-    //             id: appId,
-    //         });
-
-    //         if (app === null) {
-    //             // TODO: Better to return an error message here
-    //             return null;
-    //         }
-
-    //         const updatedApp = await strapi.services.application.update(
-    //             { id: appId },
-    //             {
-    //                 status: "rejected", // TODO: Change to constants
-    //             }
-    //         );
-
-    //         return {
-    //             application: sanitizeEntity(updatedApp, {
-    //                 model: strapi.models.application,
-    //             }),
-    //         };
-    //     }
-
-    //     return null;
-    // },
 };

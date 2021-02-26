@@ -22,11 +22,11 @@ class LFGActions {
             );
 
             // Only intended for test case creation
-            if(resp.body.errors) {
-                for(let error of resp.body.errors) {
-                    console.log(`🛑 ~ file: LFGActions.js ~ line 26 ~ resp.body.errors`, error, error.extensions?.exception?.data)
-                }
-            }
+            // if(resp.body.errors) {
+            //     for(let error of resp.body.errors) {
+            //         console.log(`🛑 ~ file: LFGActions.js ~ line 26 ~ resp.body.errors`, error, error.extensions?.exception?.data)
+            //     }
+            // }
 
             return {
                 response: resp,
@@ -215,7 +215,22 @@ class LFGActions {
         this.leaderRejectApplication = async function (
             applicationId,
             leaderUser
-        ) {};
+        ) {
+            const variables = {
+                id: applicationId,
+            };
+            const resp = await utils.call(
+                leaderUser.jwt,
+                graphql.mutations.rejectApplication,
+                variables
+            );
+
+            return {
+                response: resp,
+                errors: resp.body.errors,
+                application: resp.body?.data?.rejectApplication?.application,
+            };
+        };
     }
 }
 

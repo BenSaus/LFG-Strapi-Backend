@@ -28,3 +28,4 @@ require("./invite/acceptInvite");
 require("./invite/rejectInvite");
 require("./application/createApplication");
 require("./application/acceptApplication");
+require("./application/rejectApplication");

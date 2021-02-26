@@ -5,6 +5,12 @@ mutation rejectApplication($id: ID!) {
             id
             status
             message
+            group {
+                id
+            }
+            applicant {
+                id
+            }
         }
     }
 }
