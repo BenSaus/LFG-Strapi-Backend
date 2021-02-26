@@ -159,9 +159,9 @@ it("Create application, error invite exists", async (done) => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
-    expect(errors[0].message).toBe(errorCodes.USER_ALREADY_INVITED_TO_GROUP.message);
+    expect(errors[0].message).toBe(errorCodes.USER_ALREADY_INVITED.message);
     expect(errors[0].extensions.exception.status).toBe(
-        errorCodes.USER_ALREADY_INVITED_TO_GROUP.code
+        errorCodes.USER_ALREADY_INVITED.code
     );
 
     done();
