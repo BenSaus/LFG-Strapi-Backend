@@ -102,6 +102,7 @@ it("Update group name, error non-unique name", async (done) => {
     const errors = resp.body.errors;
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe("ValidationError");
     expect(resp.body).toMatchSnapshot();
     done();
@@ -123,6 +124,7 @@ it("Update group name, error empty name", async (done) => {
     const errors = resp.body.errors;
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe("ValidationError");
     expect(resp.body).toMatchSnapshot();
     done();
@@ -144,6 +146,7 @@ it("Update group name, error one space name", async (done) => {
     const errors = resp.body.errors;
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe("ValidationError");
     expect(resp.body).toMatchSnapshot();
     done();
@@ -185,6 +188,7 @@ it("Update group member max, error invalid member max", async (done) => {
     const errors = resp.body.errors;
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe("ValidationError");
     expect(resp.body).toMatchSnapshot();
     done();
@@ -206,6 +210,7 @@ it("Update group member max, error invalid member max - max", async (done) => {
     const errors = resp.body.errors;
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe("ValidationError");
     expect(resp.body).toMatchSnapshot();
     done();

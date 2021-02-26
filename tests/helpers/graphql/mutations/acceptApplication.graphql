@@ -5,10 +5,12 @@ mutation acceptApplication($id: ID!) {
             id
             status
             message
-        }
-        group {
-            id
-            name
+            group {
+                id
+                members {
+                    id
+                }
+            }
         }
     }
 }

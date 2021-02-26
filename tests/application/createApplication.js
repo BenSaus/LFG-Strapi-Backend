@@ -65,6 +65,7 @@ it("Create application, error duplicate", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(
         errorCodes.APPLICATION_ALREADY_EXISTS.message
     );
@@ -100,6 +101,7 @@ it("Create application, error already a member", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(errorCodes.ALREADY_A_MEMBER.message);
     expect(errors[0].extensions.exception.status).toBe(
         errorCodes.ALREADY_A_MEMBER.code
@@ -123,6 +125,7 @@ it("Create application, error you are the leader", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(errorCodes.NOT_AUTHORIZED.message);
     expect(errors[0].extensions.exception.status).toBe(
         errorCodes.NOT_AUTHORIZED.code
@@ -155,6 +158,7 @@ it("Create application, error invite exists", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(errorCodes.USER_ALREADY_INVITED_TO_GROUP.message);
     expect(errors[0].extensions.exception.status).toBe(
         errorCodes.USER_ALREADY_INVITED_TO_GROUP.code
@@ -183,6 +187,7 @@ it("Create application, error group is closed", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(errorCodes.GROUP_NOT_OPEN.message);
     expect(errors[0].extensions.exception.status).toBe(
         errorCodes.GROUP_NOT_OPEN.code
@@ -209,6 +214,7 @@ it("Create application, error group not found", async (done) => {
     expect(application).toBeUndefined();
 
     expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
     expect(errors[0].message).toBe(errorCodes.GROUP_NOT_FOUND.message);
     expect(errors[0].extensions.exception.status).toBe(
         errorCodes.GROUP_NOT_FOUND.code

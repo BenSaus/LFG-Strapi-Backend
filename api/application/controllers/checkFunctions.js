@@ -21,8 +21,8 @@ module.exports = {
 
     inviteMustNotExist: (invite) => {
         if(invite !== null) {
-            const err = new Error(errorCodes.USER_ALREADY_INVITED_TO_GROUP.message);
-            err.status = errorCodes.USER_ALREADY_INVITED_TO_GROUP.code;
+            const err = new Error(errorCodes.USER_ALREADY_INVITED.message);
+            err.status = errorCodes.USER_ALREADY_INVITED.code;
             throw err;
         }
     }
